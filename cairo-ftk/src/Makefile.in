@@ -14,6 +14,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -32,6 +33,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+noinst_PROGRAMS = demo1$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -56,6 +58,13 @@ libcairo_ftk_la_OBJECTS = $(am_libcairo_ftk_la_OBJECTS)
 libcairo_ftk_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libcairo_ftk_la_CFLAGS) \
 	$(CFLAGS) $(libcairo_ftk_la_LDFLAGS) $(LDFLAGS) -o $@
+PROGRAMS = $(noinst_PROGRAMS)
+am_demo1_OBJECTS = demo1-demo1.$(OBJEXT)
+demo1_OBJECTS = $(am_demo1_OBJECTS)
+demo1_LDADD = $(LDADD)
+demo1_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(demo1_CFLAGS) $(CFLAGS) $(demo1_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -68,8 +77,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libcairo_ftk_la_SOURCES)
-DIST_SOURCES = $(libcairo_ftk_la_SOURCES)
+SOURCES = $(libcairo_ftk_la_SOURCES) $(demo1_SOURCES)
+DIST_SOURCES = $(libcairo_ftk_la_SOURCES) $(demo1_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -188,6 +197,9 @@ lib_LTLIBRARIES = libcairo-ftk.la
 libcairo_ftk_la_SOURCES = cairo-ftk-surface.c
 libcairo_ftk_la_CFLAGS = @FTK_CFLAGS@ @CAIRO_CFLAGS@
 libcairo_ftk_la_LDFLAGS = @FTK_LIBS@ @CAIRO_LIBS@
+demo1_SOURCES = demo1.c
+demo1_CFLAGS = @FTK_CFLAGS@ @CAIRO_CFLAGS@
+demo1_LDFLAGS = @FTK_LIBS@ @CAIRO_LIBS@ 
 all: all-am
 
 .SUFFIXES:
@@ -251,12 +263,23 @@ clean-libLTLIBRARIES:
 libcairo-ftk.la: $(libcairo_ftk_la_OBJECTS) $(libcairo_ftk_la_DEPENDENCIES) 
 	$(libcairo_ftk_la_LINK) -rpath $(libdir) $(libcairo_ftk_la_OBJECTS) $(libcairo_ftk_la_LIBADD) $(LIBS)
 
+clean-noinstPROGRAMS:
+	@list='$(noinst_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  echo " rm -f $$p $$f"; \
+	  rm -f $$p $$f ; \
+	done
+demo1$(EXEEXT): $(demo1_OBJECTS) $(demo1_DEPENDENCIES) 
+	@rm -f demo1$(EXEEXT)
+	$(demo1_LINK) $(demo1_OBJECTS) $(demo1_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/demo1-demo1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcairo_ftk_la-cairo-ftk-surface.Plo@am__quote@
 
 .c.o:
@@ -286,6 +309,20 @@ libcairo_ftk_la-cairo-ftk-surface.lo: cairo-ftk-surface.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cairo-ftk-surface.c' object='libcairo_ftk_la-cairo-ftk-surface.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcairo_ftk_la_CFLAGS) $(CFLAGS) -c -o libcairo_ftk_la-cairo-ftk-surface.lo `test -f 'cairo-ftk-surface.c' || echo '$(srcdir)/'`cairo-ftk-surface.c
+
+demo1-demo1.o: demo1.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(demo1_CFLAGS) $(CFLAGS) -MT demo1-demo1.o -MD -MP -MF $(DEPDIR)/demo1-demo1.Tpo -c -o demo1-demo1.o `test -f 'demo1.c' || echo '$(srcdir)/'`demo1.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/demo1-demo1.Tpo $(DEPDIR)/demo1-demo1.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='demo1.c' object='demo1-demo1.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(demo1_CFLAGS) $(CFLAGS) -c -o demo1-demo1.o `test -f 'demo1.c' || echo '$(srcdir)/'`demo1.c
+
+demo1-demo1.obj: demo1.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(demo1_CFLAGS) $(CFLAGS) -MT demo1-demo1.obj -MD -MP -MF $(DEPDIR)/demo1-demo1.Tpo -c -o demo1-demo1.obj `if test -f 'demo1.c'; then $(CYGPATH_W) 'demo1.c'; else $(CYGPATH_W) '$(srcdir)/demo1.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/demo1-demo1.Tpo $(DEPDIR)/demo1-demo1.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='demo1.c' object='demo1-demo1.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(demo1_CFLAGS) $(CFLAGS) -c -o demo1-demo1.obj `if test -f 'demo1.c'; then $(CYGPATH_W) 'demo1.c'; else $(CYGPATH_W) '$(srcdir)/demo1.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -369,7 +406,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS)
 installdirs:
 	for dir in "$(DESTDIR)$(libdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
@@ -401,7 +438,7 @@ maintainer-clean-generic:
 clean: clean-am
 
 clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
-	mostlyclean-am
+	clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -460,15 +497,15 @@ uninstall-am: uninstall-libLTLIBRARIES
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libLTLIBRARIES clean-libtool ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
+	clean-libLTLIBRARIES clean-libtool clean-noinstPROGRAMS ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-libLTLIBRARIES install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-libLTLIBRARIES

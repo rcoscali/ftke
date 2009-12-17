@@ -1,6 +1,5 @@
-#include <ftk.h>
-#include <pixman.h>
-#include <cairo.h>
+#include "cairo-ftk-surface.h"
+
 extern cairo_surface_t *
 _cairo_image_surface_create_with_pixman_format (unsigned char		*data,
 						pixman_format_code_t	 pixman_format,
