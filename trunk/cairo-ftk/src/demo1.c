@@ -7,7 +7,8 @@ static Ret on_paint(void* ctx, void* obj)
 
 	if(cr == NULL)
 	{
-		cr = cairo_ftk_surface_create(painter);
+		surface = cairo_ftk_surface_create(painter);
+
 	}
 	cairo_set_line_width (cr, 6);
 
