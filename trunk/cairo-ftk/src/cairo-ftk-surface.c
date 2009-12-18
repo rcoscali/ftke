@@ -24,7 +24,7 @@ cairo_surface_t* cairo_ftk_surface_create(FtkWidget* window)
 	width = ftk_bitmap_width(bitmap);
 	height = ftk_bitmap_height(bitmap);
 
-	surface = _cairo_image_surface_create_with_pixman_format(data, PIXMAN_b8g8r8a8, width, height, width * 4);
+	surface = cairo_image_surface_create_for_data(data, CAIRO_FORMAT_ARGB32, width, height, width * 4);
 
 	return surface;
 }
