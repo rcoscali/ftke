@@ -1,3 +1,8 @@
 Emulate FTK in Android Emulator.
 ==================================================
-
+1.build ftk
+2.uncompress rootfs.tar.gz
+3.uncompress ftk-dist.tar.gz in rootfs
+4.set the env ADNROID_SDK_IMAGES_DIR
+5.run build.sh
+6.start the android emulator.
