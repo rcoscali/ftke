@@ -1,0 +1,4 @@
+<applications>
+<application name="filem" icon="icons/filem.png" exec="libapp-filem.so" 
+	main="ftk_main" tr_text="ftk_translate_text" />
+</applications>
