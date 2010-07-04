@@ -1,0 +1,4 @@
+<applications>
+<application name="shell" icon="icons/shell.png" exec="libapp-calc.so" 
+	main="ftk_main" tr_text="ftk_translate_text" />
+</applications>

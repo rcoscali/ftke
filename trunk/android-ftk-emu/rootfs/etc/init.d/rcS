@@ -1,0 +1,53 @@
+#! /bin/sh
+
+# Set the path
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+
+# Source functions
+#. /etc/rc.d/init.d/functions
+
+# Set the hostname.
+hostname -F /etc/HOSTNAME
+
+# mount proc and devpts filesystem
+/bin/mount -a
+mount -o remount,rw /dev/root /
+#mount -n / -o rw,remount
+#mount -t proc /proc /proc
+#mount -t ramfs none /tmp
+#mount /dev/pts
+
+if [ -n "$IN_INITLOG" ]; then
+    IN_INITLOG=
+fi
+
+if [ ! -f /etc/HOSTNAME ]; then
+    echo ${HOSTNAME} > /etc/HOSTNAME
+fi
+
+# Clean out /etc.
+rm -f /etc/mtab~ /fastboot /fsckoptions /forcefsck
+>/var/run/utmp
+touch /var/log/wtmp
+#chgrp utmp /var/run/utmp /var/log/wtmp
+chmod 0664 /var/run/utmp /var/log/wtmp
+
+# Delete UUCP lock files.
+rm -f /var/lock/LCK*
+
+# Delete stale subsystem files.
+rm -f /var/lock/subsys/*
+
+# Delete stale pid files
+rm -f /var/run/*.pid
+
+# Load modules
+if [ -f /etc/rc.d/rc.modules ]; then
+	/etc/rc.d/rc.modules
+fi
+
+# Now that we have all of our basic modules loaded and the kernel going,
+# let's dump the syslog ring somewhere so we can find it later
+dmesg > /var/log/dmesg
+/etc/init.d/rc.local
