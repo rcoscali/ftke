@@ -6,3 +6,8 @@ Emulate FTK in Android Emulator.
 4.set the env ADNROID_SDK_IMAGES_DIR
 5.run build.sh
 6.start the android emulator.
+
+XXX:
+==================================================
+Openmoko-toolchain works fine for me. If you want use other toolchain, change build.sh.
+
