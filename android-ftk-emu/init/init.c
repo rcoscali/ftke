@@ -40,13 +40,6 @@ int init_dev_nodes(void)
     return 0;
 }
 
-int init_env(void)
-{
-	// setenv("LD_LIBRARY_PATH", "/lib:/usr/lib:/usr/local/lib:/opt/lib", 1);
-
-	return 0;
-}
-
 int do_init(void)
 {
 	int ret = 0;
@@ -54,12 +47,11 @@ int do_init(void)
 	init_dev_nodes();
 	mount_filesystem();
 	
-	ret = chroot("/system");
 	
 	return 0;
 }
 
-int startup_init2(const char* name)
+int startup_desktop(const char* name)
 {
 	struct stat st = {0};
 	int ret = stat(name, &st);
@@ -81,14 +73,10 @@ int startup_init2(const char* name)
 
 int switch_root(void)
 {
-	int ret = startup_init2("/opt/bin/desktop");
+	int ret = chroot("/system");
+	ret = startup_desktop("/opt/bin/desktop");
 
-	if(ret < 0)
-	{
-		ret = startup_init2("/init2");
-	}
-
-	return 0;
+	return ret;
 }
 
 int main(int argc, char* argv[])
