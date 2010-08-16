@@ -1,0 +1,27 @@
+ $(BUILD_ROOT)/oscl/oscl/osclbase/build/make/linux/shared-dbg/oscl_stdstring.o:  \
+ $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_stdstring.cpp \
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_stdstring.h \
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_base.h \
+  $(SRC_ROOT)/oscl/oscl/config/linux/osclconfig.h \
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_limits_typedefs.h \
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_unix_common.h \
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_ix86.h \
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_check.h \
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_base_macros.h \
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_types.h \
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_check.h \
+  $(BUILD_ROOT)/installed_include/pv_config.h \
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_lock_base.h
+ $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_stdstring.cpp :
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_stdstring.h :
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_base.h :
+  $(SRC_ROOT)/oscl/oscl/config/linux/osclconfig.h :
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_limits_typedefs.h :
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_unix_common.h :
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_ix86.h :
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_check.h :
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_base_macros.h :
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_types.h :
+  $(SRC_ROOT)/oscl/oscl/config/shared/osclconfig_check.h :
+  $(BUILD_ROOT)/installed_include/pv_config.h :
+  $(SRC_ROOT)/oscl/oscl/osclbase/src/oscl_lock_base.h :
