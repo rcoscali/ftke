@@ -26,7 +26,8 @@ SRCS := pvmf_format_type.cpp \
 	pvmf_media_clock.cpp \
 	pvmf_duration_infomessage.cpp \
 	pvmf_metadata_infomessage.cpp \
-	pvmf_return_codes.cpp
+	pvmf_return_codes.cpp \
+	pvmf_event_handling.cpp
 
 HDRS :=  pv_interface.h \
          pvmf_node_interface.h \

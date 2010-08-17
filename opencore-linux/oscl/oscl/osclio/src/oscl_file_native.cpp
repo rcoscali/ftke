@@ -24,6 +24,9 @@
 #include "oscl_utf8conv.h"
 #include "oscl_int64_utils.h"
 
+#include <sys/time.h>
+#include <utils/Log.h>
+
 #ifdef ENABLE_SHAREDFD_PLAYBACK
 #undef LOG_TAG
 #define LOG_TAG "OsclNativeFile"
