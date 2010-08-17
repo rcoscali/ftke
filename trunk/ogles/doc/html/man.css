@@ -1,0 +1,86 @@
+/* man-latex.css */
+
+/* block */
+
+body {
+    font-family: "Times Roman", serif;
+    font-size: medium;
+    background-color: white;
+    color: black;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 2ex;
+    margin-bottom: 2ex;
+}
+
+div.left {
+    float: left;
+    width: 45%;
+}
+
+div.right {
+    float: right;
+    width: 45%;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+dd p {
+    margin-top: 0ex;
+    text-indent: 0em;
+}
+
+pre {
+    font-family: "Courier New", Courier, monotype;
+    font-size: medium;
+}
+
+p.center {
+    text-align: center;
+}
+
+/* inline */
+
+a {
+    text-decoration: none;
+}
+
+code {
+    font-family: "Courier New", Courier, monotype;
+}
+
+pre var, code var, pre em, code em {
+    font-family: "Times Roman", serif;
+    font-size: medium;
+    font-style: italic;
+}
+
+pre strong, code strong {
+    font-family: "Times Roman", serif;
+    font-size: medium;
+    font-weight: bold;
+}
+
+div.footer {
+    margin-top: 3ex;
+    padding-top: 1.5ex;
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
+    clear: both;
+}
+
+div.footer p {
+    font-size: smaller;
+    margin-top: 0ex;
+    margin-bottom: 0ex;
+}
+
+/* discouraged */
+
+b, i {
+   color: red;
+}

@@ -1,0 +1,13 @@
+TARGET codegen.lib
+TARGETTYPE lib
+SOURCEPATH ..\..\src\codegen
+SOURCE arm-codegen.c
+SOURCE arm-dis.c
+SOURCE bitset.c
+SOURCE emit.c
+SOURCE heap.c
+SOURCE instruction.c
+SOURCE segment.c
+USERINCLUDE ..\..\src\codegen
+SYSTEMINCLUDE \epoc32\include\libc
+SYSTEMINCLUDE \epoc32\include

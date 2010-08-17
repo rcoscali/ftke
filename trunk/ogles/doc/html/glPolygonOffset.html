@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <title>glPolygonOffset</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glPolygonOffset, man"/>
+    <meta name="description" content="OpenGL ES man page of glPolygonOffset"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glPolygonOffset</strong></code> , <code><strong>glPolygonOffsetx</strong></code>  - set the scale and units used to calculate depth values</p><h2>C Specification</h2> <pre>void <strong>glPolygonOffset</strong>(GLfloat <var>factor</var>, GLfloat <var>units</var>)
+void <strong>glPolygonOffsetx</strong>(GLfixed <var>factor</var>, GLfixed <var>units</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>factor</var></code></dt> <dd><p>Specifies a scale factor that is used to create a variable depth offset for each polygon. The initial value is 0.</p></dd> <dt><code><var>units</var></code></dt> <dd><p>Is multiplied by an implementation-specific value to create a constant depth offset. The initial value is 0.</p></dd></dl><h2>Description</h2> <p>When <code>GL_POLYGON_OFFSET_FILL</code> is enabled, each fragment's <code><var>depth</var></code> value will be offset after it is interpolated from the <code><var>depth</var></code> values of the appropriate vertices. The value of the offset is <em>m</em>  *  <em>factor</em>  +  <em>r</em>  *  <em>units</em>, where <em>m</em> is a measurement of the change in depth relative to the screen area of the polygon, and <em>r</em> is the smallest value that is guaranteed to produce a resolvable offset for a given implementation. The offset is added before the depth test is performed and before the value is written into the depth buffer.</p> <p><code><strong>glPolygonOffset</strong></code> is useful for for applying decals to surfaces.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glDepthFunc.html"><code><strong>glDepthFunc</strong></code></a>, <a href="glEnable.html"><code><strong>glEnable</strong></code></a></p></body>
+</html>

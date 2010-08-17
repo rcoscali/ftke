@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>eglIntro</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, eglIntro, man"/>
+    <meta name="description" content="OpenGL ES man page of eglIntro"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>eglIntro</strong></code>  - introduction to OpenGL ES in an EGL window system</p><h2>Overview</h2> <p>OpenGL ES (GL) is a 3D-oriented renderer for embedded systems. It is made available through the <dfn>OpenGL ES Native Platform Graphics Interface</dfn> (EGL). Depending on its implementation EGL might be more or less tightly integrated into the native window system. Most EGL functions require an EGL display connection, which can be obtained by calling <a href="eglGetDisplay.html"><code><strong>eglGetDisplay</strong></code></a> and passing in a native display handler or <code>EGL_DEFAULT_DISPLAY</code>. To initialize and query what EGL version is supported on the display connection, call <a href="eglInitialize.html"><code><strong>eglInitialize</strong></code></a>.</p> <p>Native window systems supporting EGL make a subset of their visuals available for GL rendering. Windows and pixmaps created with these visuals may also be rendered into using the native window system API.</p> <p>EGL extends a native window or pixmap with additional buffers. These buffers include a color buffer, a depth buffer, and a stencil buffer. Some or all of the buffers listed are included in each EGL frame buffer configuration.</p> <p>EGL supports rendering into three types of surfaces: windows, pixmaps and pixel buffers (pbuffers). EGL window and pixmap surfaces are associated with corresponding resources of the native window system. EGL pixel buffers are EGL only resources, and might not accept rendering through the native window system.</p> <p>To render using OpenGL ES into an EGL surface, you must determine the appropriate EGL frame buffer configuration, which supports the rendering features the application requires. <a href="eglChooseConfig.html"><code><strong>eglChooseConfig</strong></code></a> returns an <code>EGLConfig</code> matching the required attributes, if any. A complete list of EGL frame buffer configurations can be obtained by calling <a href="eglGetConfigs.html"><code><strong>eglGetConfigs</strong></code></a>. Attributes of a particular EGL frame buffer configuration can be queried by calling <a href="eglGetConfigAttrib.html"><code><strong>eglGetConfigAttrib</strong></code></a>.</p> <p>For EGL window and pixmap surfaces, a suitable native window or pixmap with a matching native visual must be created first. For a given EGL frame buffer configuration, the native visual type and ID can be retrieved with a call to <a href="eglGetConfigAttrib.html"><code><strong>eglGetConfigAttrib</strong></code></a>. For pixel buffers, no underlying native resource is required.</p> <p>To create an EGL window surface from a native window, call <a href="eglCreateWindowSurface.html"><code><strong>eglCreateWindowSurface</strong></code></a>. Likewise, to create an EGL pixmap surface, call <a href="eglCreatePixmapSurface.html"><code><strong>eglCreatePixmapSurface</strong></code></a>. Pixel buffers are created by calling <a href="eglCreatePbufferSurface.html"><code><strong>eglCreatePbufferSurface</strong></code></a> Use <a href="eglDestroySurface.html"><code><strong>eglDestroySurface</strong></code></a> to release previously allocated resources.</p> <p>An EGL rendering context is required to bind OpenGL ES rendering to an EGL surface. An EGL surface and an EGL rendering context must have compatible EGL frame buffer configurations. To create an EGL rendering context, call <a href="eglCreateContext.html"><code><strong>eglCreateContext</strong></code></a> An EGL rendering context may be bound to one or two EGL surfaces by calling <a href="eglMakeCurrent.html"><code><strong>eglMakeCurrent</strong></code></a>. This context/surfaces association becomes the current context and current surfaces, and is used by all GL rendering commands until <a href="eglMakeCurrent.html"><code><strong>eglMakeCurrent</strong></code></a> is called with different arguments.</p> <p>Both native and GL commands may be used to operate on certain surfaces, however, the two command streams are not synchronized. Synchronization can be explicitly specified using by calling <a href="eglWaitGL.html"><code><strong>eglWaitGL</strong></code></a>, <a href="eglWaitNative.html"><code><strong>eglWaitNative</strong></code></a>, and possibly by calling other native window system commands.</p><h2>Examples</h2> <p>Below is a minimal example of creating an RGBA-format window that allows rendering with OpenGL ES. The window is cleared to yellow when the program runs. For simplicity, the program does not check for any errors.</p> <pre>
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;GLES/egl.h&gt;
+#include &lt;GLES/gl.h&gt;
+
+typedef ... NativeWindowType;
+extern NativeWindowType createNativeWindow(void);
+
+static EGLint const attribute_list[] = {
+    EGL_RED_SIZE, 1,
+    EGL_GREEN_SIZE, 1,
+    EGL_BLUE_SIZE, 1,
+    EGL_NONE
+};
+
+int main(int argc, char ** argv)
+{
+    EGLDisplay display;
+    EGLConfig config;
+    EGLContext context;
+    EGLSurface surface;
+    NativeWindowType native_window;
+    EGLint num_config;
+
+    /* get an EGL display connection */
+    display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+
+    /* initialize the EGL display connection */
+    eglInitialize(display, NULL, NULL);
+
+    /* get an appropriate EGL frame buffer configuration */
+    eglChooseConfig(display, attribute_list, &amp;config, 1, &amp;num_config);
+
+    /* create an EGL rendering context */
+    context = eglCreateContext(display, config, EGL_NO_CONTEXT, NULL);
+
+    /* create a native window */
+    native_window = createNativeWindow();
+
+    /* create an EGL window surface */
+    surface = eglCreateWindowSurface(display, config, native_window, NULL);
+
+    /* connect the context to the surface */
+    eglMakeCurrent(display, surface, surface, context);
+
+    /* clear the color buffer */
+    glClearColor(1.0, 1.0, 0.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glFlush();
+
+    eglSwapBuffers(display, surface);
+
+    sleep(10);
+
+    return EXIT_SUCCESS;
+}
+</pre><h2>Using EGL Extensions</h2> <p>All supported EGL extensions will have a corresponding definition in <code>egl.h</code> and a token in the extensions string returned by <a href="eglQueryString.html"><code><strong>eglQueryString</strong></code></a>. For extensions in OpenGL ES, refer to <a href="glIntro.html"><code><strong>glIntro</strong></code></a>.</p><h2>Future EGL Versions</h2> <p><a href="eglInitialize.html"><code><strong>eglInitialize</strong></code></a> and <a href="eglQueryString.html"><code><strong>eglQueryString</strong></code></a> can be used to determine at run-time what version of EGL is available. To check the EGL version at compile-time, test whether <code>EGL_VERSION_<em>x</em>_<em>y</em></code> is defined, where <em>x</em> and <em>y</em> are the major and minor version numbers.</p><h2>Files</h2> <dl><dt><code>GLES/egl.h</code></dt> <dd><p>EGL header file</p></dd></dl><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glIntro.html"><code><strong>glIntro</strong></code></a>, <a href="glFinish.html"><code><strong>glFinish</strong></code></a>, <a href="glFlush.html"><code><strong>glFlush</strong></code></a>, <a href="eglChooseConfig.html"><code><strong>eglChooseConfig</strong></code></a>, <a href="eglCreateContext.html"><code><strong>eglCreateContext</strong></code></a>, <a href="eglCreatePbufferSurface.html"><code><strong>eglCreatePbufferSurface</strong></code></a>, <a href="eglCreatePixmapSurface.html"><code><strong>eglCreatePixmapSurface</strong></code></a>, <a href="eglCreateWindowSurface.html"><code><strong>eglCreateWindowSurface</strong></code></a>, <a href="eglDestroyContext.html"><code><strong>eglDestroyContext</strong></code></a>, <a href="eglDestroySurface.html"><code><strong>eglDestroySurface</strong></code></a>, <a href="eglGetConfigs.html"><code><strong>eglGetConfigs</strong></code></a>, <a href="eglGetDisplay.html"><code><strong>eglGetDisplay</strong></code></a>, <a href="eglInitialize.html"><code><strong>eglInitialize</strong></code></a>, <a href="eglMakeCurrent.html"><code><strong>eglMakeCurrent</strong></code></a>, <a href="eglQueryString.html"><code><strong>eglQueryString</strong></code></a>, <a href="eglSwapBuffers.html"><code><strong>eglSwapBuffers</strong></code></a>, <a href="eglTerminate.html"><code><strong>eglTerminate</strong></code></a>, <a href="eglWaitGL.html"><code><strong>eglWaitGL</strong></code></a>, <a href="eglWaitNative.html"><code><strong>eglWaitNative</strong></code></a></p></body>
+</html>

@@ -1,0 +1,87 @@
+struct shader_binary_file {
+	uint	magic;
+	uint	version;
+	uint	total_length;
+	uint	shader_type;
+	uint	num_data_segments;
+	uint	num_code_segments;
+	data	data_segments[num_data_segments];
+	code	code_segments[num_code_segments];
+	uint	checksum;
+};
+
+struct string {
+	uint	length;
+	char	characters[length];
+};
+
+struct data {
+	uint	segment_kind;
+	uint	num_declarations;
+	decl	declarations[num_declarations];
+	uint	num_locations;
+	loc	data[num_locations];
+};
+
+struct decl {
+	string	name;
+	type	typ;
+	uint	offset;
+};
+
+union loc {
+	vec	vector;
+	ivec	ivector;
+};
+
+struct vec {
+	float	components[4];
+};
+
+struct ivec {
+	int	components[4];
+};
+
+struct type {
+	uint		kind;
+	type_info	info;
+};
+
+union type_info {
+	primitive_type	primitive;
+	array_type	array;
+	struct_type	struct;
+};
+
+struct primitive_type {
+	uint	flags;		/* precision... */
+	uint	size;
+	uint	components;
+};
+
+struct array_type {
+	uint	size;
+	type	sub_type;
+};
+
+struct struct_type {
+	uint	num_fields;
+	type	fields[num_fields];
+};
+
+struct code {
+	uint	segment_kind;
+	uint	num_functions;
+	func	functions[num_functions];
+};
+
+struct func {
+	string 	name;
+	uint	max_locals;
+	uint	num_instructions;
+	inst	instructions[num_instructions];
+};
+
+union inst {
+};
+

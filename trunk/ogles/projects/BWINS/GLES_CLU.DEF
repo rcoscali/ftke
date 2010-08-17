@@ -1,0 +1,194 @@
+EXPORTS
+	??0FunctionCache@EGL@@QAE@IM@Z @ 1 NONAME ; public: __thiscall EGL::FunctionCache::FunctionCache(unsigned int,float)
+	??0TInt64X@@QAE@H@Z @ 2 NONAME ; public: __thiscall TInt64X::TInt64X(int)
+	??1FunctionCache@EGL@@QAE@XZ @ 3 NONAME ; public: __thiscall EGL::FunctionCache::~FunctionCache(void)
+	??4FunctionCache@EGL@@QAEAAV01@ABV01@@Z @ 4 NONAME ; public: class EGL::FunctionCache & __thiscall EGL::FunctionCache::operator=(class EGL::FunctionCache const &)
+	??5TInt64X@@QBE?AV0@H@Z @ 5 NONAME ; public: class TInt64X __thiscall TInt64X::operator>>(int)const 
+	??6TInt64X@@QBE?AV0@H@Z @ 6 NONAME ; public: class TInt64X __thiscall TInt64X::operator<<(int)const 
+	??BTInt64X@@QBEHXZ @ 7 NONAME ; public: __thiscall TInt64X::operator int(void)const 
+	??DEGL@@YA?AVVec3D@0@HABV10@@Z @ 8 NONAME ; class EGL::Vec3D __cdecl EGL::operator*(int,class EGL::Vec3D const &)
+	??DEGL@@YA?AVVec4D@0@HABV10@@Z @ 9 NONAME ; class EGL::Vec4D __cdecl EGL::operator*(int,class EGL::Vec4D const &)
+	??DTInt64X@@QBE?AV0@ABV0@@Z @ 10 NONAME ; public: class TInt64X __thiscall TInt64X::operator*(class TInt64X const &)const 
+	??DTInt64X@@QBE?AV0@H@Z @ 11 NONAME ; public: class TInt64X __thiscall TInt64X::operator*(int)const 
+	??GTInt64X@@QBE?AV0@ABV0@@Z @ 12 NONAME ; public: class TInt64X __thiscall TInt64X::operator-(class TInt64X const &)const 
+	??HTInt64X@@QBE?AV0@ABV0@@Z @ 13 NONAME ; public: class TInt64X __thiscall TInt64X::operator+(class TInt64X const &)const 
+	??KTInt64X@@QBE?AV0@ABV0@@Z @ 14 NONAME ; public: class TInt64X __thiscall TInt64X::operator/(class TInt64X const &)const 
+	??KTInt64X@@QBE?AV0@H@Z @ 15 NONAME ; public: class TInt64X __thiscall TInt64X::operator/(int)const 
+	??MTInt64X@@QBEHH@Z @ 16 NONAME ; public: int __thiscall TInt64X::operator<(int)const 
+	??OTInt64X@@QBEHH@Z @ 17 NONAME ; public: int __thiscall TInt64X::operator>(int)const 
+	??_FFunctionCache@EGL@@QAEXXZ @ 18 NONAME ; public: void __thiscall EGL::FunctionCache::`default constructor closure'(void)
+	?AddFunction@FunctionCache@EGL@@AAEPAXW4FunctionType@12@ABVRasterizerState@2@I@Z @ 19 NONAME ; private: void * __thiscall EGL::FunctionCache::AddFunction(enum EGL::FunctionCache::FunctionType,class EGL::RasterizerState const &,unsigned int)
+	?CompactCode@FunctionCache@EGL@@AAEXXZ @ 20 NONAME ; private: void __thiscall EGL::FunctionCache::CompactCode(void)
+	?EGL_Direction@EGL@@YA?AVVec3D@1@ABVVec4D@1@0@Z @ 21 NONAME ; class EGL::Vec3D __cdecl EGL::EGL_Direction(class EGL::Vec4D const &,class EGL::Vec4D const &)
+	?EGL_Power@@YAHHH@Z @ 22 NONAME ; int __cdecl EGL_Power(int,int)
+	?GetFunction@FunctionCache@EGL@@QAEPAXW4FunctionType@12@ABVRasterizerState@2@@Z @ 23 NONAME ; public: void * __thiscall EGL::FunctionCache::GetFunction(enum EGL::FunctionCache::FunctionType,class EGL::RasterizerState const &)
+	eglChooseConfig @ 24 NONAME
+	eglCopyBuffers @ 25 NONAME
+	eglCreateContext @ 26 NONAME
+	eglCreatePbufferSurface @ 27 NONAME
+	eglCreatePixmapSurface @ 28 NONAME
+	eglCreateWindowSurface @ 29 NONAME
+	eglDestroyContext @ 30 NONAME
+	eglDestroySurface @ 31 NONAME
+	eglGetConfigAttrib @ 32 NONAME
+	eglGetConfigs @ 33 NONAME
+	eglGetCurrentContext @ 34 NONAME
+	eglGetCurrentDisplay @ 35 NONAME
+	eglGetCurrentSurface @ 36 NONAME
+	eglGetDisplay @ 37 NONAME
+	eglGetProcAddress @ 38 NONAME
+	eglInitialize @ 39 NONAME
+	eglMakeCurrent @ 40 NONAME
+	eglQueryContext @ 41 NONAME
+	eglQueryString @ 42 NONAME
+	eglQuerySurface @ 43 NONAME
+	eglSwapBuffers @ 44 NONAME
+	eglTerminate @ 45 NONAME
+	eglWaitGL @ 46 NONAME
+	eglWaitNative @ 47 NONAME
+	glActiveTexture @ 48 NONAME
+	glAlphaFunc @ 49 NONAME
+	glAlphaFuncx @ 50 NONAME
+	glBindBuffer @ 51 NONAME
+	glBindTexture @ 52 NONAME
+	glBlendFunc @ 53 NONAME
+	glBufferData @ 54 NONAME
+	glBufferSubData @ 55 NONAME
+	glClear @ 56 NONAME
+	glClearColor @ 57 NONAME
+	glClearColorx @ 58 NONAME
+	glClearDepthf @ 59 NONAME
+	glClearDepthx @ 60 NONAME
+	glClearStencil @ 61 NONAME
+	glClientActiveTexture @ 62 NONAME
+	glClipPlanef @ 63 NONAME
+	glClipPlanex @ 64 NONAME
+	glColor4f @ 65 NONAME
+	glColor4x @ 66 NONAME
+	glColorMask @ 67 NONAME
+	glColorPointer @ 68 NONAME
+	glCompressedTexImage2D @ 69 NONAME
+	glCompressedTexSubImage2D @ 70 NONAME
+	glCopyTexImage2D @ 71 NONAME
+	glCopyTexSubImage2D @ 72 NONAME
+	glCullFace @ 73 NONAME
+	glCurrentPaletteMatrixOES @ 74 NONAME
+	glDeleteBuffers @ 75 NONAME
+	glDeleteTextures @ 76 NONAME
+	glDepthFunc @ 77 NONAME
+	glDepthMask @ 78 NONAME
+	glDepthRangef @ 79 NONAME
+	glDepthRangex @ 80 NONAME
+	glDisable @ 81 NONAME
+	glDisableClientState @ 82 NONAME
+	glDrawArrays @ 83 NONAME
+	glDrawElements @ 84 NONAME
+	glEnable @ 85 NONAME
+	glEnableClientState @ 86 NONAME
+	glFinish @ 87 NONAME
+	glFlush @ 88 NONAME
+	glFogf @ 89 NONAME
+	glFogfv @ 90 NONAME
+	glFogx @ 91 NONAME
+	glFogxv @ 92 NONAME
+	glFrontFace @ 93 NONAME
+	glFrustumf @ 94 NONAME
+	glFrustumx @ 95 NONAME
+	glGenBuffers @ 96 NONAME
+	glGenTextures @ 97 NONAME
+	glGetBooleanv @ 98 NONAME
+	glGetBufferParameteriv @ 99 NONAME
+	glGetClipPlanef @ 100 NONAME
+	glGetClipPlanex @ 101 NONAME
+	glGetError @ 102 NONAME
+	glGetFixedv @ 103 NONAME
+	glGetFloatv @ 104 NONAME
+	glGetIntegerv @ 105 NONAME
+	glGetLightfv @ 106 NONAME
+	glGetLightxv @ 107 NONAME
+	glGetMaterialfv @ 108 NONAME
+	glGetMaterialxv @ 109 NONAME
+	glGetPointerv @ 110 NONAME
+	glGetString @ 111 NONAME
+	glGetTexEnvfv @ 112 NONAME
+	glGetTexEnviv @ 113 NONAME
+	glGetTexEnvxv @ 114 NONAME
+	glGetTexParameterfv @ 115 NONAME
+	glGetTexParameteriv @ 116 NONAME
+	glGetTexParameterxv @ 117 NONAME
+	glHint @ 118 NONAME
+	glIsBuffer @ 119 NONAME
+	glIsEnabled @ 120 NONAME
+	glIsTexture @ 121 NONAME
+	glLightModelf @ 122 NONAME
+	glLightModelfv @ 123 NONAME
+	glLightModelx @ 124 NONAME
+	glLightModelxv @ 125 NONAME
+	glLightf @ 126 NONAME
+	glLightfv @ 127 NONAME
+	glLightx @ 128 NONAME
+	glLightxv @ 129 NONAME
+	glLineWidth @ 130 NONAME
+	glLineWidthx @ 131 NONAME
+	glLoadIdentity @ 132 NONAME
+	glLoadMatrixf @ 133 NONAME
+	glLoadMatrixx @ 134 NONAME
+	glLoadPaletteFromModelViewMatrixOES @ 135 NONAME
+	glLogicOp @ 136 NONAME
+	glMaterialf @ 137 NONAME
+	glMaterialfv @ 138 NONAME
+	glMaterialx @ 139 NONAME
+	glMaterialxv @ 140 NONAME
+	glMatrixIndexPointerOES @ 141 NONAME
+	glMatrixMode @ 142 NONAME
+	glMultMatrixf @ 143 NONAME
+	glMultMatrixx @ 144 NONAME
+	glMultiTexCoord4f @ 145 NONAME
+	glMultiTexCoord4x @ 146 NONAME
+	glNormal3f @ 147 NONAME
+	glNormal3x @ 148 NONAME
+	glNormalPointer @ 149 NONAME
+	glOrthof @ 150 NONAME
+	glOrthox @ 151 NONAME
+	glPixelStorei @ 152 NONAME
+	glPointParameterf @ 153 NONAME
+	glPointParameterfv @ 154 NONAME
+	glPointParameterx @ 155 NONAME
+	glPointParameterxv @ 156 NONAME
+	glPointSize @ 157 NONAME
+	glPointSizePointerOES @ 158 NONAME
+	glPointSizex @ 159 NONAME
+	glPolygonOffset @ 160 NONAME
+	glPolygonOffsetx @ 161 NONAME
+	glPopMatrix @ 162 NONAME
+	glPushMatrix @ 163 NONAME
+	glQueryMatrixxOES @ 164 NONAME
+	glReadPixels @ 165 NONAME
+	glRotatef @ 166 NONAME
+	glRotatex @ 167 NONAME
+	glSampleCoverage @ 168 NONAME
+	glSampleCoveragex @ 169 NONAME
+	glScalef @ 170 NONAME
+	glScalex @ 171 NONAME
+	glScissor @ 172 NONAME
+	glShadeModel @ 173 NONAME
+	glStencilFunc @ 174 NONAME
+	glStencilMask @ 175 NONAME
+	glStencilOp @ 176 NONAME
+	glTexCoordPointer @ 177 NONAME
+	glTexEnvf @ 178 NONAME
+	glTexEnvfv @ 179 NONAME
+	glTexEnvx @ 180 NONAME
+	glTexEnvxv @ 181 NONAME
+	glTexImage2D @ 182 NONAME
+	glTexParameterf @ 183 NONAME
+	glTexParameterx @ 184 NONAME
+	glTexSubImage2D @ 185 NONAME
+	glTranslatef @ 186 NONAME
+	glTranslatex @ 187 NONAME
+	glVertexPointer @ 188 NONAME
+	glViewport @ 189 NONAME
+	glWeightPointerOES @ 190 NONAME
+	??0TInt64X@@QAE@ABVTInt64@@@Z @ 191 NONAME ; public: __thiscall TInt64X::TInt64X(class TInt64 const &)
+	??0TInt64X@@QAE@XZ @ 192 NONAME ; public: __thiscall TInt64X::TInt64X(void)
+

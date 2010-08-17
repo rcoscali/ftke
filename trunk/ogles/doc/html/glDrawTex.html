@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>glDrawTex</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glDrawTex, man"/>
+    <meta name="description" content="OpenGL ES man page of glDrawTex"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glDrawTexsOES</strong></code> , <code><strong>glDrawTexiOES</strong></code> , <code><strong>glDrawTexfOES</strong></code> , <code><strong>glDrawTexxOES</strong></code> , <code><strong>glDrawTexsvOES</strong></code> , <code><strong>glDrawTexivOES</strong></code> , <code><strong>glDrawTexfvOES</strong></code> , <code><strong>glDrawTexxvOES</strong></code>  - draws a texture rectangle to the screen</p><h2>C Specification</h2> <pre>void <strong>glDrawTexsOES</strong>(GLshort <var>x</var>,
+    GLshort <var>y</var>,
+    GLshort <var>z</var>,
+    GLshort <var>width</var>,
+    GLshort <var>height</var>)
+
+void <strong>glDrawTexiOES</strong>(GLint <var>x</var>,
+    GLint <var>y</var>,
+    GLint <var>z</var>,
+    GLint <var>width</var>,
+    GLint <var>height</var>)
+
+void <strong>glDrawTexfOES</strong>(GLfloat <var>x</var>,
+    GLfloat <var>y</var>,
+    GLfloat <var>z</var>,
+    GLfloat <var>width</var>,
+    GLfloat <var>height</var>)
+
+void <strong>glDrawTexxOES</strong>(GLfixed <var>x</var>,
+    GLfixed <var>y</var>,
+    GLfixed <var>z</var>,
+    GLfixed <var>width</var>,
+    GLfixed <var>height</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>x</var></code>, <code><var>y</var></code>, <code><var>z</var></code></dt> <dd><p>Specify the position of the affected screen rectangle.</p></dd> <dt><code><var>width</var></code>, <code><var>height</var></code></dt> <dd><p>Specifies the width and height of the affected screen rectangle in pixels.</p></dd></dl><h2>C Specification</h2> <pre>void <strong>glDrawTexsvOES</strong>(GLshort* <var>coords</var>)
+void <strong>glDrawTexivOES</strong>(GLint* <var>coords</var>)
+void <strong>glDrawTexfvOES</strong>(GLfloat* <var>coords</var>)
+void <strong>glDrawTexxvOES</strong>(GLfixed* <var>coords</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>coords</var></code></dt> <dd><p>Specifies a pointer to the coords for the affected screen rectangle.</p></dd></dl><h2>Description</h2> <p><code><strong>glDrawTexOES</strong></code> draws a texture rectangle to the screen.</p> <p><code><var>x</var></code> and <code><var>y</var></code> are given directly in window (viewport) coordinates.</p> <p><code><var>z</var></code> is mapped to window depth Zw as follows:</p> <p>If <em>z</em> ? <em>0</em> then <em>Zw</em> = <em>n</em></p> <p>If <em>z</em> ? <em>1</em> then <em>Zw</em> = <em>f</em></p> <p>Otherwise <em>Zw</em> =  <em>n</em> + <em>z</em>  *  (<em>f</em> - <em>n</em>)</p> <p>where <code><var>n</var></code> and <code><var>f</var></code> are the near and far values of <code>GL_DEPTH_RANGE</code> respectively.</p> <p><code><var>width</var></code> and <code><var>height</var></code> specify the width and height of the affected screen rectangle in pixels. These values may be positive or negative; however if either of these are negative, nothing is drawn.</p> <p>Calling one of the DrawTex functions generates a fragment for each pixel that overlaps the screen rectangle bounded by (<code><var>x</var></code>, <code><var>y</var></code>) and (<code><var>x</var></code> + <code><var>width</var></code>), (<code><var>y</var></code> + <code><var>height</var></code>). For each generated fragment, the depth is given by <code><var>Zw</var></code> as defined above, and the color by the current color.</p> <p>Texture coordinates for each texture unit are computed as follows:</p> <p>Let <code><var>X</var></code> and <code><var>Y</var></code> be the screen x and y coordinates of each sample point associated with the fragment. Let <code><var>Wt</var></code> and <code><var>Ht</var></code> be the width and height in texels of the texture currently bound to the texture unit. (If the texture is a mipmap, let <code><var>Wt</var></code> and <code><var>Ht</var></code> be the dimensions of the level specified by <code>GL_TEXTURE_BASE_LEVEL</code>). Let <code><var>Ucr</var></code>, <code><var>Vcr</var></code>, <code><var>Wcr</var></code> and <code><var>Hcr</var></code> be (respectively) the four integers that make up the texture crop rectangle parameter for the currently bound texture. The fragment texture coordinates (<code><var>s</var></code>, <code><var>t</var></code>, <code><var>r</var></code>, <code><var>q</var></code>) are given by:</p> <p><em>s</em> =  (<em>Ucr</em> +  (<em>X</em> - <em>x</em>) *  (<em>Wcr</em> / <em>width</em>))  / <em>Wt</em></p> <p><em>t</em> =  (<em>Vcr</em> +  (<em>Y</em> - <em>y</em>) *  (<em>Hcr</em> / <em>height</em>))  / <em>Ht</em></p> <p><em>r</em> = <em>0</em></p> <p><em>q</em> = <em>1</em></p><h2>Notes</h2> <p>In the specific case where <code><var>X</var></code>, <code><var>Y</var></code>, <code><var>x</var></code> and <code><var>y</var></code> are all integers, <code><var>Wcr</var></code>/<code><var>width</var></code> and <code><var>Hcr</var></code>/<code><var>height</var></code> are both equal to one, the base level is used for the texture read, and fragments are sampled at pixel centers, implementations are required to ensure that the resulting u, v texture indices are also integers. This results in a one-to-one mapping of texels to fragments.</p> <p>Note that <code><var>Wcr</var></code> and/or <code><var>Hcr</var></code> can be negative. The formulas given above for <code><var>s</var></code> and <code><var>t</var></code> still apply in this case. The result is that if <code><var>Wcr</var></code> is negative, the source rectangle for <code><strong>glDrawTexOES</strong></code> operations lies to the left of the reference point (<code><var>Ucr</var></code>, <code><var>Vcr</var></code>) rather than to the right of it, and appears right-to-left reversed on the screen after a call to DrawTex. Similarly, if <code><var>Hcr</var></code> is negative, the source rectangle lies below the reference point (<code><var>Ucr</var></code>, <code><var>Vcr</var></code>) rather than above it, and appears upside-down on the screen.</p> <p>Note also that <code><var>s</var></code>, <code><var>t</var></code>, <code><var>r</var></code>, and <code><var>q</var></code> are computed for each fragment as part of <code><strong>glDrawTexOES</strong></code> rendering. This implies that the texture matrix is ignored and has no effect on the rendered result.</p> <p><code><strong>glDrawTexOES</strong></code> is available only if the <code>GL_OES_draw_texture</code> extension is supported by your implementation.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glGetTexParameter.html"><code><strong>glGetTexParameter</strong></code></a>, <a href="glTexParameter.html"><code><strong>glTexParameter</strong></code></a>,</p></body>
+</html>

@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <title>eglInitialize</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, eglInitialize, man"/>
+    <meta name="description" content="OpenGL ES man page of eglInitialize"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>eglInitialize</strong></code>  - initialize an EGL display connection</p><h2>C Specification</h2> <pre>EGLBoolean <strong>eglInitialize</strong>(EGLDisplay <var>display</var>,
+    EGLint * <var>major</var>,
+    EGLint * <var>minor</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>display</var></code></dt> <dd><p>Specifies the EGL display connection to initialize.</p></dd> <dt><code><var>major</var></code></dt> <dd><p>Returns the major version number of the EGL implementation. May be <code>NULL</code>.</p></dd> <dt><code><var>minor</var></code></dt> <dd><p>Returns the minor version number of the EGL implementation. May be <code>NULL</code>.</p></dd></dl><h2>Description</h2> <p><code><strong>eglInitialize</strong></code> initialized the EGL display connection obtained with <a href="eglGetDisplay.html"><code><strong>eglGetDisplay</strong></code></a>. Initializing an already initialized EGL display connection has no effect besides returning the version numbers.</p> <p><code><var>major</var></code> and <code><var>minor</var></code> do not return values if they are specified as <code>NULL</code>.</p> <p>Use <a href="eglTerminate.html"><code><strong>eglTerminate</strong></code></a> to release resources associated with an EGL display connection.</p><h2>Errors</h2> <p><code>EGL_FALSE</code> is returned if <code><strong>eglInitialize</strong></code> fails, <code>EGL_TRUE</code> otherwise. <code><var>major</var></code> and <code><var>minor</var></code> are not modified when <code>EGL_FALSE</code> is returned.</p> <p><code>EGL_BAD_DISPLAY</code> is generated if <code><var>display</var></code> is not an EGL display connection.</p> <p><code>EGL_NOT_INITIALIZED</code> is generated if <code><var>display</var></code> cannot be initialized.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="eglGetDisplay.html"><code><strong>eglGetDisplay</strong></code></a>, <a href="eglTerminate.html"><code><strong>eglTerminate</strong></code></a></p></body>
+</html>

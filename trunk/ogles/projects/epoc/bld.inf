@@ -1,0 +1,12 @@
+// Exported header files
+prj_exports
+..\..\include\epoc\int64x.h
+
+// Project files
+prj_mmpfiles
+codegen.mmp
+ogles.mmp
+
+// Test project files
+prj_testmmpfiles
+test.mmp manual

@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>eglWaitNative</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, eglWaitNative, man"/>
+    <meta name="description" content="OpenGL ES man page of eglWaitNative"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>eglWaitNative</strong></code>  - complete native execution prior to subsequent GL rendering calls</p><h2>C Specification</h2> <pre>EGLBoolean <strong>eglWaitNative</strong>(EGLint <var>engine</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>engine</var></code></dt> <dd><p>Specifies a particular marking engine to be waited on. Must be <code>EGL_EGL_CORE_NATIVE_ENGINE</code>.</p></dd></dl><h2>Description</h2> <p>Native rendering calls made prior to <code><strong>eglWaitNative</strong></code> are guaranteed to be executed before GL rendering calls made after <code><strong>eglWaitNative</strong></code>.</p> <p><code><strong>eglWaitNative</strong></code> is ignored if there is no current EGL rendering context.</p><h2>Errors</h2> <p><code>EGL_BAD_PARAMETER</code> is generated if <code><var>engine</var></code> is not a recognized marking engine.</p> <p><code>EGL_BAD_NATIVE_SURFACE</code> is generated if the surface associated with the current context has a native window or pixmap, and that window or pixmap is no longer valid.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glFinish.html"><code><strong>glFinish</strong></code></a>, <a href="glFlush.html"><code><strong>glFlush</strong></code></a>, <a href="eglWaitGL.html"><code><strong>eglWaitGL</strong></code></a></p></body>
+</html>

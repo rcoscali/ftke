@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "codegen", "codegen.vcproj", "{3630A8EB-EB87-412D-B4EA-113D00AFCEE3}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ogles", "ogles.vcproj", "{0667A652-9108-453B-B2EA-27CE7CEFD475}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3630A8EB-EB87-412D-B4EA-113D00AFCEE3} = {3630A8EB-EB87-412D-B4EA-113D00AFCEE3}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{3630A8EB-EB87-412D-B4EA-113D00AFCEE3}.Debug.ActiveCfg = Debug|Win32
+		{3630A8EB-EB87-412D-B4EA-113D00AFCEE3}.Debug.Build.0 = Debug|Win32
+		{3630A8EB-EB87-412D-B4EA-113D00AFCEE3}.Release.ActiveCfg = Release|Win32
+		{3630A8EB-EB87-412D-B4EA-113D00AFCEE3}.Release.Build.0 = Release|Win32
+		{0667A652-9108-453B-B2EA-27CE7CEFD475}.Debug.ActiveCfg = Debug|Win32
+		{0667A652-9108-453B-B2EA-27CE7CEFD475}.Debug.Build.0 = Debug|Win32
+		{0667A652-9108-453B-B2EA-27CE7CEFD475}.Release.ActiveCfg = Release|Win32
+		{0667A652-9108-453B-B2EA-27CE7CEFD475}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

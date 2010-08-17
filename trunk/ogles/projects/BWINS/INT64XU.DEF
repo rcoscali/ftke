@@ -1,0 +1,14 @@
+EXPORTS
+	??0TInt64X@@QAE@H@Z @ 1 NONAME ; public: __thiscall TInt64X::TInt64X(int)
+	??5TInt64X@@QBE?AV0@H@Z @ 2 NONAME ; public: class TInt64X __thiscall TInt64X::operator>>(int)const 
+	??6TInt64X@@QBE?AV0@H@Z @ 3 NONAME ; public: class TInt64X __thiscall TInt64X::operator<<(int)const 
+	??BTInt64X@@QBEHXZ @ 4 NONAME ; public: __thiscall TInt64X::operator int(void)const 
+	??DTInt64X@@QBE?AV0@ABV0@@Z @ 5 NONAME ; public: class TInt64X __thiscall TInt64X::operator*(class TInt64X const &)const 
+	??DTInt64X@@QBE?AV0@H@Z @ 6 NONAME ; public: class TInt64X __thiscall TInt64X::operator*(int)const 
+	??GTInt64X@@QBE?AV0@ABV0@@Z @ 7 NONAME ; public: class TInt64X __thiscall TInt64X::operator-(class TInt64X const &)const 
+	??HTInt64X@@QBE?AV0@ABV0@@Z @ 8 NONAME ; public: class TInt64X __thiscall TInt64X::operator+(class TInt64X const &)const 
+	??KTInt64X@@QBE?AV0@ABV0@@Z @ 9 NONAME ; public: class TInt64X __thiscall TInt64X::operator/(class TInt64X const &)const 
+	??KTInt64X@@QBE?AV0@H@Z @ 10 NONAME ; public: class TInt64X __thiscall TInt64X::operator/(int)const 
+	??MTInt64X@@QBEHH@Z @ 11 NONAME ; public: int __thiscall TInt64X::operator<(int)const 
+	??OTInt64X@@QBEHH@Z @ 12 NONAME ; public: int __thiscall TInt64X::operator>(int)const 
+

@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>glClearColor</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glClearColor, man"/>
+    <meta name="description" content="OpenGL ES man page of glClearColor"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glClearColor</strong></code> , <code><strong>glClearColorx</strong></code>  - specify clear values for the color buffer</p><h2>C Specification</h2> <pre>void <strong>glClearColor</strong>(GLclampf <var>red</var>,
+    GLclampf <var>green</var>,
+    GLclampf <var>blue</var>,
+    GLclampf <var>alpha</var>)
+
+void <strong>glClearColorx</strong>(GLclampx <var>red</var>,
+    GLclampx <var>green</var>,
+    GLclampx <var>blue</var>,
+    GLclampx <var>alpha</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>red</var></code>, <code><var>green</var></code>, <code><var>blue</var></code>, <code><var>alpha</var></code></dt> <dd><p>Specify the red, green, blue, and alpha values used when the color buffer is cleared. The initial values are all 0.</p></dd></dl><h2>Description</h2> <p><code><strong>glClearColor</strong></code> specifies the red, green, blue, and alpha values used by <a href="glClear.html"><code><strong>glClear</strong></code></a> to clear the color buffer. Values specified by <code><strong>glClearColor</strong></code> are clamped to the range [0, 1].</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glClear.html"><code><strong>glClear</strong></code></a>, <a href="glClearDepth.html"><code><strong>glClearDepth</strong></code></a>, <a href="glClearStencil.html"><code><strong>glClearStencil</strong></code></a>, <a href="glColorMask.html"><code><strong>glColorMask</strong></code></a></p></body>
+</html>

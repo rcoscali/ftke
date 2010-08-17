@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>glColor</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glColor, man"/>
+    <meta name="description" content="OpenGL ES man page of glColor"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glColor4f</strong></code> , <code><strong>glColor4x</strong></code>  - set the current color</p><h2>C Specification</h2> <pre>void <strong>glColor4f</strong>(GLfloat <var>red</var>,
+    GLfloat <var>green</var>,
+    GLfloat <var>blue</var>,
+    GLfloat <var>alpha</var>)
+
+void <strong>glColor4x</strong>(GLfixed <var>red</var>,
+    GLfixed <var>green</var>,
+    GLfixed <var>blue</var>,
+    GLfixed <var>alpha</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>red</var></code>, <code><var>green</var></code>, <code><var>blue</var></code>, <code><var>alpha</var></code></dt> <dd><p>Specify new red, green, blue, and alpha values for the current color. The initial value is (1, 1, 1, 1).</p></dd></dl><h2>Description</h2> <p>The GL stores a current four-valued RGBA color. <code><strong>glColor</strong></code> sets a new four-valued RGBA color.</p> <p>Current color values are stored in fixed-point or floating-point. In case the values are stored in floating-point, the mantissa and exponent sizes are unspecified.</p> <p>Neither fixed-point nor floating-point values are clamped to the range [0, 1] before the current color is updated. However, color components are clamped to this range before they are interpolated or written into the color buffer.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glColorPointer.html"><code><strong>glColorPointer</strong></code></a>, <a href="glNormal.html"><code><strong>glNormal</strong></code></a>, <a href="glMultiTexCoord.html"><code><strong>glMultiTexCoord</strong></code></a></p></body>
+</html>

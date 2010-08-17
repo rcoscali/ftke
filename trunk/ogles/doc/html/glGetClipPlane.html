@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>glGetClipPlane</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glGetClipPlane, man"/>
+    <meta name="description" content="OpenGL ES man page of glGetClipPlane"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>glGetClipPlanef, glGetClipPlanex</strong></code>  - return the coefficients of the specified clipping plane</p><h2>C Specification</h2> <pre>void <strong>glGetClipPlanef</strong>(GLenum <var>plane</var>, GLfloat *<var>equation</var>)</pre> <pre>void <strong>glGetClipPlanex</strong>(GLenum <var>plane</var>, GLfixed *<var>equation</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>plane</var></code></dt> <dd><p>Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form <code>GL_CLIP_PLANEi</code> where <em>0</em> &lt; <em>i</em> &lt;  <code>GL_MAX_CLIP_PLANES</code></p></dd> <dt><code><var>equation</var></code></dt> <dd><p>Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).</p></dd></dl><h2>Description</h2> <p><code><strong>glGetClipPlane</strong></code> returns in equation the four coefficients of the plane equation for plane.</p><h2>Notes</h2> <p>It is always the case that <code>GL_CLIP_PLANEi</code> =  <code>GL_CLIP_PLANE0</code> + <code>i</code>.</p> <p>If an error is generated, no change is made to the contents of <code><var>equation</var></code>.</p><h2>Errors</h2> <p><code>GL_INVALID_ENUM</code> is generated if <code><var>plane</var></code> is not an accepted value.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glClipPlane.html"><code><strong>glClipPlane</strong></code></a></p></body>
+</html>
