@@ -27,7 +27,7 @@ CO := -c -o # make sure to leave a space at the end
 
 
 #Make all warnings into errors.
-FLAG_COMPILE_WARNINGS_AS_ERRORS := -Werror
+#FLAG_COMPILE_WARNINGS_AS_ERRORS := -Werror
 
 STAT_LIB_EXT:=a
 SHARED_LIB_EXT:=so

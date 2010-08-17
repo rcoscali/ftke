@@ -52,3 +52,93 @@ OSCL_EXPORT_REF PVMFEventCategory PVMFAsyncEvent::IsA() const
 {
     return iEventCategory;
 }
+        
+        PVMFAsyncEvent::PVMFAsyncEvent(PVMFEventCategory aEventCategory,
+                       PVMFEventType aEventType,
+                       OsclAny* aContext,
+                       OsclAny* aEventData) :
+                iEventCategory(aEventCategory)
+                , iEventType(aEventType)
+                , iEventExtInterface(NULL)
+                , iLocalBufferSize(0)
+                , iContext(aContext)
+                , iEventData(aEventData)
+        {
+            oscl_memset(iLocalBuffer, 0, PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE);
+            iEventDataLengthAvailable = false;
+            iEventDataLength = 0;
+        }
+
+        PVMFAsyncEvent::PVMFAsyncEvent(PVMFEventCategory aEventCategory,
+                       PVMFEventType aEventType,
+                       OsclAny* aContext,
+                       OsclAny* aEventData,
+                       const void* aLocalBuffer,
+                       const size_t aLocalBufferSize) :
+                iEventCategory(aEventCategory)
+                , iEventType(aEventType)
+                , iEventExtInterface(NULL)
+                , iLocalBufferSize(aLocalBufferSize)
+                , iContext(aContext)
+                , iEventData(aEventData)
+        {
+            if (aLocalBuffer)
+            {
+                OSCL_ASSERT(iLocalBufferSize <= PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE);
+                if (iLocalBufferSize > PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE)
+                {
+                    iLocalBufferSize = PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE;
+                }
+
+                oscl_memcpy(iLocalBuffer, aLocalBuffer, iLocalBufferSize);
+            }
+            iEventDataLengthAvailable = false;
+            iEventDataLength = 0;
+        }
+
+        PVMFAsyncEvent::PVMFAsyncEvent(PVMFEventCategory aEventCategory,
+                       PVMFEventType aEventType,
+                       OsclAny* aContext,
+                       PVInterface* aEventExtInterface,
+                       OsclAny* aEventData) :
+                iEventCategory(aEventCategory)
+                , iEventType(aEventType)
+                , iEventExtInterface(aEventExtInterface)
+                , iLocalBufferSize(0)
+                , iContext(aContext)
+                , iEventData(aEventData)
+        {
+            oscl_memset(iLocalBuffer, 0, PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE);
+            iEventDataLengthAvailable = false;
+            iEventDataLength = 0;
+        }
+
+        PVMFAsyncEvent::PVMFAsyncEvent(PVMFEventCategory aEventCategory,
+                       PVMFEventType aEventType,
+                       OsclAny* aContext,
+                       PVInterface* aEventExtInterface,
+                       OsclAny* aEventData,
+                       const void* aLocalBuffer,
+                       const size_t aLocalBufferSize) :
+                iEventCategory(aEventCategory)
+                , iEventType(aEventType)
+                , iEventExtInterface(aEventExtInterface)
+                , iLocalBufferSize(aLocalBufferSize)
+                , iContext(aContext)
+                , iEventData(aEventData)
+        {
+            if (aLocalBuffer)
+            {
+                OSCL_ASSERT(iLocalBufferSize <= PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE);
+                if (iLocalBufferSize > PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE)
+                {
+                    iLocalBufferSize = PVMF_ASYNC_EVENT_LOCAL_BUF_SIZE;
+                }
+
+                oscl_memcpy(iLocalBuffer, aLocalBuffer, iLocalBufferSize);
+            }
+            iEventDataLengthAvailable = false;
+            iEventDataLength = 0;
+        }
+
+        PVMFAsyncEvent::~PVMFAsyncEvent() {}

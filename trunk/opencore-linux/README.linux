@@ -1,2 +1,21 @@
 1.This code come from android 2.2 version.
 
+ChangeLog:
+==============================================
+1.add build.sh
+2.add oscl/oscl/config/linux/utils
+3.oscl/oscl/osclio/src/oscl_file_native.cpp 
+#include <sys/time.h>
+#include <utils/Log.h>
+
+4.tools_v2/build/make/g++.mk
+#FLAG_COMPILE_WARNINGS_AS_ERRORS := -Werror
+
+5.move constructor/deconstor from pvmi/pvmf/include/pvmf_event_handling.h to pvmi/pvmf/src/pvmf_event_handling.cpp
+
+6.pvmi/pvmf/build/make/local.mk
+add pvmf_event_handling.cpp to compile
+
+7.codecs_v2/omx/omx_proxy/src/pv_omx_interface_proxy.cpp
+//setpriority(PRIO_PROCESS, 0, ANDROID_PRIORITY_AUDIO);
+
