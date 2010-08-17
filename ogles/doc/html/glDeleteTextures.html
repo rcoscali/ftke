@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>glDeleteTextures</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glDeleteTextures, man"/>
+    <meta name="description" content="OpenGL ES man page of glDeleteTextures"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>glDeleteTextures</strong></code>  - delete named textures</p><h2>C Specification</h2> <pre>void <strong>glDeleteTextures</strong>(GLsizei <var>n</var>, const GLuint * <var>textures</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>n</var></code></dt> <dd><p>Specifies the number of textures to be deleted.</p></dd> <dt><code><var>textures</var></code></dt> <dd><p>Specifies an array of textures to be deleted.</p></dd></dl><h2>Description</h2> <p><code><strong>glDeleteTextures</strong></code> deletes <code><var>n</var></code> textures named by the elements of the array <code><var>textures</var></code>. After a texture is deleted, it has no contents or dimensionality, and its name is free for reuse (for example by <a href="glGenTextures.html"><code><strong>glGenTextures</strong></code></a>). If a texture that is currently bound is deleted, the binding reverts to 0 (the default texture).</p> <p><code><strong>glDeleteTextures</strong></code> silently ignores 0's and names that do not correspond to existing textures.</p><h2>Errors</h2> <p><code>GL_INVALID_VALUE</code> is generated if <code><var>n</var></code> is negative.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glBindTexture.html"><code><strong>glBindTexture</strong></code></a>, <a href="glGenTextures.html"><code><strong>glGenTextures</strong></code></a></p></body>
+</html>

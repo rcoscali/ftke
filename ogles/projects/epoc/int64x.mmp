@@ -1,0 +1,11 @@
+TARGET 		int64x.lib
+TARGETTYPE 	lib
+SOURCEPATH 	..\..\src\epoc
+SOURCE 		int64x.cpp
+SYSTEMINCLUDE	..\..\include\epoc
+SYSTEMINCLUDE 	\epoc32\include
+LIBRARY		euser.lib
+
+
+
+

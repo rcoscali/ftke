@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>glGetTexEnv</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glGetTexEnv, man"/>
+    <meta name="description" content="OpenGL ES man page of glGetTexEnv"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glGetTexEnvf</strong></code> , <code><strong>glGetTexEnvx</strong></code>  - return texture environment parameters</p><h2>C Specification</h2> <pre>void <strong>glGetTexEnvf</strong>(GLenum <var>target</var>,
+    GLenum <var>pname</var>,
+    GLfloat * <var>params</var>)
+
+void <strong>glGetTexEnvx</strong>(GLenum <var>target</var>,
+    GLenum <var>pname</var>,
+    GLfixed * <var>params</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>target</var></code></dt> <dd><p>Specifies a texture environment, which must be <code>GL_TEXTURE_ENV</code>.</p></dd> <dt><code><var>pname</var></code></dt> <dd><p>Specifies the symbolic name of a texture environment parameter. Which can be either <code>GL_TEXTURE_ENV_MODE</code>, <code>GL_TEXTURE_ENV_COLOR</code>, <code>GL_TEXTURE_WRAP_S</code>, <code>GL_TEXTURE_WRAP_T</code>, or <code>GL_GENERATE_MIPMAP</code>.</p></dd> <dt><code><var>params</var></code></dt> <dd><p>Returns the requested data.</p></dd></dl><h2>Description</h2> <p><code><strong>glGetTexParameter</strong></code> returns in <code><var>params</var></code> selected values of a texture environment that was specified with glTexEnv. <code><var>target</var></code> specifies a texture environment. Currently, only one texture environment is defined and supported: <code>GL_TEXTURE_ENV</code>.</p> <p><code><var>pname</var></code> names a specific texture environment parameter, as follows:</p> <dl><dt><code>GL_TEXTURE_ENV_MODE</code></dt> <dd><p><code><var>params</var></code> returns the single-valued texture environment mode, a symbolic constant. The initial value is <code>GL_MODULATE</code>.</p></dd> <dt><code>GL_TEXTURE_ENV_COLOR</code></dt> <dd><p><code><var>params</var></code> returns four fixed or floating-point values that are the texture environment color. The initial value is <code>(0, 0, 0, 0)</code>.</p></dd></dl><h2>Notes</h2> <p>If an error is generated, no change is made to the contents of <code><var>params</var></code>.</p><h2>Errors</h2> <p><code>GL_INVALID_ENUM</code> is generated if <code><var>target</var></code> or <code><var>pname</var></code> is not one of the accepted defined values.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glTexEnv.html"><code><strong>glTexEnv</strong></code></a></p></body>
+</html>

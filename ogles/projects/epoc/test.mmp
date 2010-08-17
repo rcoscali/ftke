@@ -1,0 +1,24 @@
+TARGET			test.app
+TARGETTYPE		app
+UID			0x100039ce 0x101f6163
+TARGETPATH		\system\apps\test
+SOURCEPATH		..\..\test\epoc
+SOURCE			test.cpp
+SOURCE			app.cpp 
+SOURCE			doc.cpp 
+SOURCE			appview.cpp 
+SOURCE			appui.cpp
+RESOURCE		test.rss
+SOURCE			paint.cpp
+SOURCE                  stdafx.cpp
+USERINCLUDE		.
+SYSTEMINCLUDE		..\..\include
+SYSTEMINCLUDE		..\..\src
+SYSTEMINCLUDE		\epoc32\include\libc
+SYSTEMINCLUDE		\epoc32\include
+LIBRARY			apparc.lib cone.lib edll.lib euser.lib eikcore.lib eikcoctl.lib fbscli.lib
+LIBRARY			gles_cl.lib
+START BITMAP dodge.mbm
+    SOURCEPATH ..\..\test\epoc
+    SOURCE c24 dodge.bmp
+END

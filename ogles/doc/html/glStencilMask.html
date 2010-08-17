@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>glStencilMask</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glStencilMask, man"/>
+    <meta name="description" content="OpenGL ES man page of glStencilMask"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>glStencilMask</strong></code>  - control the writing of individual bits in the stencil planes</p><h2>C Specification</h2> <pre>void <strong>glStencilMask</strong>(GLuint <var>mask</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>mask</var></code></dt> <dd><p>Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. The initial value is all 1's.</p></dd></dl><h2>Description</h2> <p><code><strong>glStencilMask</strong></code> controls the writing of individual bits in the stencil planes. The least significant <em>n</em> bits of <code><var>mask</var></code>, where <em>n</em> is the number of bits in the stencil buffer, specify a mask. Where a 1 appears in the mask, it's possible to write to the corresponding bit in the stencil buffer. Where a 0 appears, the corresponding bit is write-protected. Initially, all bits are enabled for writing.</p><h2>Associated Gets</h2> <p><a href="glGet.html"><code><strong>glGet</strong></code></a> with argument <code>GL_STENCIL_BITS</code></p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glClear.html"><code><strong>glClear</strong></code></a>, <a href="glColorMask.html"><code><strong>glColorMask</strong></code></a>, <a href="glDepthMask.html"><code><strong>glDepthMask</strong></code></a>, <a href="glGet.html"><code><strong>glGet</strong></code></a>, <a href="glStencilFunc.html"><code><strong>glStencilFunc</strong></code></a>, <a href="glStencilOp.html"><code><strong>glStencilOp</strong></code></a></p></body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>glCurrentPaletteMatrix</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glCurrentPaletteMatrix, man"/>
+    <meta name="description" content="OpenGL ES man page of glCurrentPaletteMatrix"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glCurrentPaletteMatrixOES</strong></code>  - defines which of the palette’s matrices is affected by subsequent matrix operations</p><h2>C Specification</h2> <pre>void <strong>glCurrentPaletteMatrixOES</strong>(GLuint <var>index</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>index</var></code></dt> <dd><p>specifies the index into the palette's matrices.</p></dd></dl><h2>Description</h2> <p><code><strong>glCurrentPaletteMatrixOES</strong></code> defines which of the palette’s matrices is affected by subsequent matrix operations when the current matrix mode is <code>GL_MATRIX_PALETTE_OES</code>.</p><h2>Errors</h2> <p><code>GL_INVALID_VALUE</code> is generated if <code><var>index</var></code> is not between <code>0</code> and <code>GL_MAX_PALETTE_MATRICES_OES</code> - <code>1</code>.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glLoadPaletteFromModelViewMatrix.html"><code><strong>glLoadPaletteFromModelViewMatrix</strong></code></a>, <a href="glMatrixIndexPointer.html"><code><strong>glMatrixIndexPointer</strong></code></a>, <a href="glMatrixMode.html"><code><strong>glMatrixMode</strong></code></a>, <a href="glWeightPointer.html"><code><strong>glWeightPointer</strong></code></a></p></body>
+</html>

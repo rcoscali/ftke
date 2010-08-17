@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>glOrtho</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glOrtho, man"/>
+    <meta name="description" content="OpenGL ES man page of glOrtho"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glOrthof</strong></code> , <code><strong>glOrthox</strong></code>  - multiply the current matrix with an orthographic matrix</p><h2>C Specification</h2> <pre>void <strong>glOrthof</strong>(GLfloat <var>left</var>,
+    GLfloat <var>right</var>,
+    GLfloat <var>bottom</var>,
+    GLfloat <var>top</var>,
+    GLfloat <var>near</var>,
+    GLfloat <var>far</var>)
+
+void <strong>glOrthox</strong>(GLfixed <var>left</var>,
+    GLfixed <var>right</var>,
+    GLfixed <var>bottom</var>,
+    GLfixed <var>top</var>,
+    GLfixed <var>near</var>,
+    GLfixed <var>far</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>left</var></code>, <code><var>right</var></code></dt> <dd><p>Specify the coordinates for the left and right vertical clipping planes.</p></dd> <dt><code><var>bottom</var></code>, <code><var>top</var></code></dt> <dd><p>Specify the coordinates for the bottom and top horizontal clipping planes.</p></dd> <dt><code><var>near</var></code>, <code><var>far</var></code></dt> <dd><p>Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</p></dd></dl><h2>Description</h2> <p><code><strong>glOrtho</strong></code> describes a transformation that produces a parallel projection. The current matrix (see <a href="glMatrixMode.html"><code><strong>glMatrixMode</strong></code></a>) is multiplied by this matrix and the result replaces the current matrix, as if <a href="glMultMatrix.html"><code><strong>glMultMatrix</strong></code></a> were called with the following matrix as its argument:</p> <p class="center"><table align="center"><tr><td>(</td><td><table align="center"><tr><td><sup>2</sup>/<sub>(<em>right</em> - <em>left</em>)</sub></td> <td>0</td> <td>0</td> <td><em>t</em><sub><em>x</em></sub></td></tr> <tr><td>0</td> <td><sup>2</sup>/<sub>(<em>top</em> - <em>bottom</em>)</sub></td> <td>0</td> <td><em>t</em><sub><em>y</em></sub></td></tr> <tr><td>0</td> <td>0</td> <td><sup>( -2)</sup>/<sub>(<em>far</em> - <em>near</em>)</sub></td> <td><em>t</em><sub><em>z</em></sub></td></tr> <tr><td>0</td> <td>0</td> <td>0</td> <td>1</td></tr></table></td><td>)</td></tr></table></p> <p>where</p> <p class="center"><table align="center"><tr><td><em>t</em><sub><em>x</em></sub>   =    -  <sup>(<em>right</em> + <em>left</em>)</sup>/<sub>(<em>right</em> - <em>left</em>)</sub></td></tr> <tr><td><em>t</em><sub><em>y</em></sub>   =    -  <sup>(<em>top</em> + <em>bottom</em>)</sup>/<sub>(<em>top</em> - <em>bottom</em>)</sub></td></tr> <tr><td><em>t</em><sub><em>z</em></sub>   =    -  <sup>(<em>far</em> + <em>near</em>)</sup>/<sub>(<em>far</em> - <em>near</em>)</sub></td></tr></table></p> <p>Typically, the matrix mode is <code>GL_PROJECTION</code>, and (<code><var>left</var></code>, <code><var>bottom</var></code>, -<code><var>near</var></code>) and (<code><var>right</var></code>, <code><var>top</var></code>, -<code><var>near</var></code>) specify the points on the near clipping plane that are mapped to the lower left and upper right corners of the window, respectively, assuming that the eye is located at (0, 0, 0). -<code><var>far</var></code> specifies the location of the far clipping plane. Both <code><var>near</var></code> and <code><var>far</var></code> can be either positive or negative.</p> <p>Use <a href="glPushMatrix.html"><code><strong>glPushMatrix</strong></code></a> and <a href="glPushMatrix.html"><code><strong>glPopMatrix</strong></code></a> to save and restore the current matrix stack.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glFrustum.html"><code><strong>glFrustum</strong></code></a>, <a href="glMatrixMode.html"><code><strong>glMatrixMode</strong></code></a>, <a href="glMultMatrix.html"><code><strong>glMultMatrix</strong></code></a>, <a href="glPushMatrix.html"><code><strong>glPushMatrix</strong></code></a>, <a href="glViewport.html"><code><strong>glViewport</strong></code></a></p></body>
+</html>

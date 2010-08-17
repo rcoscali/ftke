@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>glMultiTexCoord</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, glMultiTexCoord, man"/>
+    <meta name="description" content="OpenGL ES man page of glMultiTexCoord"/>
+  </head>
+  <body><h2>Name</h2><p> <code><strong>glMultiTexCoord4f</strong></code> , <code><strong>glMultiTexCoord4x</strong></code>  - set the current texture coordinates</p><h2>C Specification</h2> <pre>void <strong>glMultiTexCoord4f</strong>(GLenum <var>target</var>,
+    GLfloat <var>s</var>,
+    GLfloat <var>t</var>,
+    GLfloat <var>r</var>,
+    GLfloat <var>q</var>)
+
+void <strong>glMultiTexCoord4x</strong>(GLenum <var>target</var>,
+    GLfixed <var>s</var>,
+    GLfixed <var>t</var>,
+    GLfixed <var>r</var>,
+    GLfixed <var>q</var>)</pre><h2>Parameters</h2> <dl><dt><code><var>target</var></code></dt> <dd><p>Specifies texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least one. Must be one of <code>GL_TEXTURE</code><em>i</em>, where 0  ≤  <em>i</em>  &lt;  <code>GL_MAX_TEXTURE_UNITS</code>, which is an implementation-dependent value.</p></dd> <dt><code><var>s</var></code>, <code><var>t</var></code>, <code><var>r</var></code>, <code><var>q</var></code></dt> <dd><p>Specify <code><var>s</var></code>, <code><var>t</var></code>, <code><var>r</var></code>, and <code><var>q</var></code> texture coordinates for <code><var>target</var></code> texture unit. The initial value is (0, 0, 0, 1).</p></dd></dl><h2>Description</h2> <p><code><strong>glMultiTexCoord</strong></code> specifies the four texture coordinates as (<code><var>s</var></code>, <code><var>t</var></code>, <code><var>r</var></code>, <code><var>q</var></code>).</p> <p>The current texture coordinates are part of the data that is associated with each vertex.</p><h2>Notes</h2>  <p>It is always the case that <code>GL_TEXTURE</code><em>i</em>  =  <code>GL_TEXTURE0</code> + <em>i</em>.</p><h2>Associated Gets</h2> <p><a href="glGet.html"><code><strong>glGet</strong></code></a> with argument <code>GL_MAX_TEXTURE_UNITS</code></p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glActiveTexture.html"><code><strong>glActiveTexture</strong></code></a>, <a href="glClientActiveTexture.html"><code><strong>glClientActiveTexture</strong></code></a>, <a href="glColor.html"><code><strong>glColor</strong></code></a>, <a href="glGet.html"><code><strong>glGet</strong></code></a>, <a href="glNormal.html"><code><strong>glNormal</strong></code></a>, <a href="glTexCoordPointer.html"><code><strong>glTexCoordPointer</strong></code></a></p></body>
+</html>

@@ -1,0 +1,527 @@
+<html>
+  <head>
+    <title>OpenGL ES Reference Manual</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+    <meta name="author" content="Claude Knaus, Gary Pallett"/>
+    <meta name="keywords" content="OpenGL ES, EGL, man, reference"/>
+    <meta name="description" content="Reference manual for OpenGL ES and EGL"/>
+  </head>
+
+  <body>
+
+<h1>OpenGL<sup>&reg;</sup> ES 1.1 Reference Manual</h1>
+
+    <p class="center">
+      <a href="index.html">Alphabetical Index</a> &nbsp; | &nbsp;
+      <strong>Thematic Index</strong>
+    </p>
+
+    <div class="left">
+    <h2>OpenGL ES Commands</h2>
+
+    <p>
+      Introduction:
+    </p>
+
+    <ul>
+      <li><a href="glIntro.html">glIntro</a></li>
+    </ul>
+
+    <h3>Primitives</h3>
+
+    <p>
+      Specify polyon offset:
+    </p>
+
+    <ul>
+      <li><a href="glPolygonOffset.html">glPolygonOffset</a></li>
+    </ul>
+
+    <h3>Vertex Arrays</h3>
+
+    <p>
+      Specify vertex arrays:
+    </p>
+
+    <ul>
+      <li><a href="glColorPointer.html">glColorPointer</a></li>
+      <li><a href="glNormalPointer.html">glNormalPointer</a></li>
+      <li><a href="glVertexPointer.html">glVertexPointer</a></li>
+      <li><a href="glTexCoordPointer.html">glTexCoordPointer</a></li>
+    </ul>
+
+    <p>
+      Select the active texture coordinate array:
+    </p>
+
+    <ul>
+      <li><a href="glClientActiveTexture.html">glClientActiveTexture</a></li>
+    </ul>
+
+    <p>
+      Draw vertex arrays:
+    </p>
+
+    <ul>
+      <li><a href="glEnableClientState.html">glEnableClientState</a></li>
+      <li><a href="glEnableClientState.html">glDisableClientState</a></li>
+      <li><a href="glDrawArrays.html">glDrawArrays</a></li>
+      <li><a href="glDrawElements.html">glDrawElements</a></li>
+    </ul>
+    <h3>Buffer Objects</h3>
+    <p>
+    Create a named buffer:
+    </p>
+    <ul>
+      <li><a href="glBindBuffer.html">glBindBuffer</a></li>
+      <li><a href="glDeleteBuffers.html">glDeleteBuffers</a></li>
+      <li><a href="glGenBuffers.html">glGenBuffers</a></li>
+    </ul>
+    <p>
+    Modify buffer data:
+    </p>
+    <ul>
+      <li><a href="glBufferData.html">glBufferData</a></li>
+      <li><a href="glBufferSubData.html">glBufferSubData</a></li>
+    </ul>
+    <h3>Coordinate Transformation</h3>
+
+    <p>
+      Transform the current matrix:
+    </p>
+
+    <ul>
+      <li><a href="glRotate.html">glRotate</a></li>
+      <li><a href="glScale.html">glScale</a></li>
+      <li><a href="glTranslate.html">glTranslate</a></li>
+      <li><a href="glMultMatrix.html">glMultMatrix</a></li>
+      <li><a href="glFrustum.html">glFrustum</a></li>
+      <li><a href="glOrtho.html">glOrtho</a></li>
+    </ul>
+
+    <p>
+      Replace the current matrix:
+    </p>
+
+    <ul>
+      <li><a href="glLoadMatrix.html">glLoadMatrix</a></li>
+      <li><a href="glLoadIdentity.html">glLoadIdentity</a></li>
+    </ul>
+
+    <p>
+      Manipulate the matrix stack:
+    </p>
+
+    <ul>
+      <li><a href="glMatrixMode.html">glMatrixMode</a></li>
+      <li><a href="glPushMatrix.html">glPushMatrix</a></li>
+      <li><a href="glPushMatrix.html">glPopMatrix</a></li>
+    </ul>
+
+    <p>
+      Specify the viewport:
+    </p>
+
+    <ul>
+      <li><a href="glClipPlane.html">glClipPlane</a></li>
+      <li><a href="glDepthRange.html">glDepthRange</a></li>
+      <li><a href="glViewport.html">glViewport</a></li>
+    </ul>
+
+    <h3>Color and Lighting</h3>
+
+    <p>
+      Set the current color and normal vector:
+    </p>
+
+    <ul>
+      <li><a href="glColor.html">glColor</a></li>
+      <li><a href="glNormal.html">glNormal</a></li>
+    </ul>
+
+    <p>
+      Specify light source, material, or lighting model parameter values:
+    </p>
+
+    <ul>
+      <li><a href="glLight.html">glLight</a></li>
+      <li><a href="glMaterial.html">glMaterial</a></li>
+      <li><a href="glLightModel.html">glLightModel</a></li>
+    </ul>
+
+    <p>
+      Choose a shading model:
+    </p>
+
+    <ul>
+      <li><a href="glShadeModel.html">glShadeModel</a></li>
+    </ul>
+
+    <p>
+      Specify which polygon orientation is front-facing:
+    </p>
+
+    <ul>
+      <li><a href="glFrontFace.html">glFrontFace</a></li>
+    </ul>
+
+    <h3>Rasterization</h3>
+
+    <p>
+      Specify the dimensions of points and lines:
+    </p>
+
+    <ul>
+      <li><a href="glPointSize.html">glPointSize</a></li>
+      <li><a href="glPointParameter.html">glPointParameter</a></li>
+      <li><a href="glLineWidth.html">glLineWidth</a></li>
+    </ul>
+
+    <p>
+      Choose when polygons are rasterized:
+    </p>
+
+    <ul>
+      <li><a href="glCullFace.html">glCullFace</a></li>
+    </ul>
+
+    <h3>Pixel Operations</h3>
+
+    <p>
+      Read pixels:
+    </p>
+
+    <ul>
+      <li><a href="glReadPixels.html">glReadPixels</a></li>
+    </ul>
+
+    <p>
+      Specify how pixels are encoded:
+    </p>
+
+    <ul>
+      <li><a href="glPixelStore.html">glPixelStore</a></li>
+    </ul>
+
+    <h3>Textures</h3>
+
+    <p>
+      Control how a texture is applied to a fragment:
+    </p>
+
+    <ul>
+      <li><a href="glTexParameter.html">glTexParameter</a></li>
+      <li><a href="glTexEnv.html">glTexEnv</a></li>
+    </ul>
+
+    <p>
+      Set the current texture coordinates:
+    </p>
+
+    <ul>
+      <li><a href="glMultiTexCoord.html">glMultiTexCoord</a></li>
+    </ul>
+
+    <p>
+      Specify a two-dimensional texture image or texture subimage:
+    </p>
+
+    <ul>
+      <li><a href="glTexImage2D.html">glTexImage2D</a></li>
+      <li><a href="glTexSubImage2D.html">glTexSubImage2D</a></li>
+    </ul>
+
+    <p>
+      Copy a texture or a part of it:
+    </p>
+
+    <ul>
+      <li><a href="glCopyTexImage2D.html">glCopyTexImage2D</a></li>
+      <li><a href="glCopyTexSubImage2D.html">glCopyTexSubImage2D</a></li>
+    </ul>
+
+    <p>
+      Specify a two-dimensional compressed texture image or texture subimage:
+    </p>
+
+    <ul>
+      <li><a href="glCompressedTexImage2D.html">glCompressedTexImage2D</a></li>
+      <li><a href="glCompressedTexSubImage2D.html">glCompressedTexSubImage2D</a></li>
+    </ul>
+
+    <p>
+      Create a named texture:
+    </p>
+
+    <ul>
+      <li><a href="glBindTexture.html">glBindTexture</a></li>
+      <li><a href="glDeleteTextures.html">glDeleteTextures</a></li>
+      <li><a href="glGenTextures.html">glGenTextures</a></li>
+    </ul>
+
+    <p>
+      Select the active texture unit:
+    </p>
+
+    <ul>
+      <li><a href="glActiveTexture.html">glActiveTexture</a></li>
+    </ul>
+
+    <h3>Fog</h3>
+
+    <p>
+      Set fog parameter:
+    </p>
+
+    <ul>
+      <li><a href="glFog.html">glFog</a></li>
+    </ul>
+
+    <h3>Frame Buffer Operations</h3>
+
+    <p>
+      Control per-fragment testing:
+    </p>
+
+    <ul>
+      <li><a href="glScissor.html">glScissor</a></li>
+      <li><a href="glAlphaFunc.html">glAlphaFunc</a></li>
+      <li><a href="glStencilFunc.html">glStencilFunc</a></li>
+      <li><a href="glStencilOp.html">glStencilOp</a></li>
+      <li><a href="glDepthFunc.html">glDepthFunc</a></li>
+    </ul>
+
+    <p>
+      Combine fragment and frame buffer values:
+    </p>
+
+    <ul>
+      <li><a href="glBlendFunc.html">glBlendFunc</a></li>
+      <li><a href="glLogicOp.html">glLogicOp</a></li>
+    </ul>
+
+    <p>
+      Clear buffers:
+    </p>
+
+    <ul>
+      <li><a href="glClear.html">glClear</a></li>
+      <li><a href="glClearColor.html">glClearColor</a></li>
+      <li><a href="glClearDepth.html">glClearDepth</a></li>
+      <li><a href="glClearStencil.html">glClearStencil</a></li>
+    </ul>
+
+    <p>
+      Control buffers enabled for writing:
+    </p>
+
+    <ul>
+      <li><a href="glColorMask.html">glColorMask</a></li>
+      <li><a href="glDepthMask.html">glDepthMask</a></li>
+      <li><a href="glStencilMask.html">glStencilMask</a></li>
+    </ul>
+
+    <p>
+      Control multisampling:
+    </p>
+
+    <ul>
+      <li><a href="glSampleCoverage.html">glSampleCoverage</a></li>
+    </ul>
+
+    <h3>Modes and Execution</h3>
+
+    <p>
+      Enable and disable modes:
+    </p>
+
+    <ul>
+      <li><a href="glEnable.html">glEnable</a></li>
+      <li><a href="glEnable.html">glDisable</a></li>
+    </ul>
+
+    <p>
+      Wait until all GL commands have executed completely:
+    </p>
+
+    <ul>
+      <li><a href="glFinish.html">glFinish</a></li>
+    </ul>
+
+    <p>
+      Force all issued GL commands to be executed:
+    </p>
+
+    <ul>
+      <li><a href="glFlush.html">glFlush</a></li>
+    </ul>
+
+    <p>
+      Specify hints for GL operation:
+    </p>
+
+    <ul>
+      <li><a href="glHint.html">glHint</a></li>
+    </ul>
+
+    <h3>State Queries</h3>
+
+    <p>
+      Obtain information about an error or the current GL connection:
+    </p>
+
+    <ul>
+      <li><a href="glGetError.html">glGetError</a></li>
+      <li><a href="glGetString.html">glGetString</a></li>
+    </ul>
+
+    <p>
+      Query static state variables:
+    </p>
+
+    <ul>
+      <li><a href="glGet.html">glGet</a></li>
+      <li><a href="glGetBufferParameter.html">glGetBufferParameter</a></li>
+      <li><a href="glGetClipPlane.html">glGetClipPlane</a></li>
+      <li><a href="glGetLight.html">glGetLight</a></li>
+      <li><a href="glGetMaterial.html">glGetMaterial</a></li>
+      <li><a href="glGetPointer.html">glGetPointer</a></li>
+      <li><a href="glGetTexEnv.html">glGetTexEnv</a></li>
+      <li><a href="glGetTexParameter.html">glGetTexParameter</a></li>
+      <li><a href="glIsBuffer.html">glIsBuffer</a></li>
+      <li><a href="glIsEnabled.html">glIsEnabled</a></li>
+      <li><a href="glIsTexture.html">glIsTexture</a></li>
+    </ul>
+
+    <h2>OES Extensions</h2>
+    <h3>Matrix Palette</h3>
+    <ul>
+      <li><a href="glCurrentPaletteMatrix.html">glCurrentPaletteMatrix</a></li>
+      <li><a href="glLoadPaletteFromModelViewMatrix.html">glLoadPaletteFromModelViewMatrix</a></li>
+      <li><a href="glMatrixIndexPointer.html">glMatrixIndexPointer</a></li>
+      <li><a href="glWeightPointer.html">glWeightPointer</a></li>
+    </ul>
+    <h3>Point Size Array</h3>
+    <ul>
+      <li><a href="glPointSizePointer.html">glPointSizePointer</a></li>
+    </ul>
+    <h3>Draw Texture</h3>
+    <ul>
+      <li><a href="glDrawTex.html">glDrawTex</a></li>
+    </ul>
+
+    </div>
+
+    <div class="right">
+    <h2>EGL  Reference Pages</h2>
+
+    <p>
+      Introduction:
+    </p>
+
+    <ul>
+      <li><a href="eglIntro.html">eglIntro</a></li>
+    </ul>
+
+    <p>
+      Manage or query display connections:
+    </p>
+
+    <ul>
+      <li><a href="eglGetDisplay.html">eglGetDisplay</a></li>
+      <li><a href="eglInitialize.html">eglInitialize</a></li>
+      <li><a href="eglQueryString.html">eglQueryString</a></li>
+      <li><a href="eglTerminate.html">eglTerminate</a></li>
+    </ul>
+
+    <p>
+      Request GL and EGL extension functions:
+    </p>
+
+    <ul>
+      <li><a href="eglGetProcAddress.html">eglGetProcAddress</a></li>
+    </ul>
+
+    <p>
+      Query errors:
+    </p>
+
+    <ul>
+      <li><a href="eglGetError.html">eglGetError</a></li>
+    </ul>
+
+    <p>
+      Request or query frame buffer configurations:
+    </p>
+
+    <ul>
+      <li><a href="eglGetConfigs.html">eglGetConfigs</a></li>
+      <li><a href="eglChooseConfig.html">eglChooseConfig</a></li>
+      <li><a href="eglGetConfigAttrib.html">eglGetConfigAttrib</a></li>
+    </ul>
+
+    <p>
+      Manage or query EGL rendering contexts:
+    </p>
+
+    <ul>
+      <li><a href="eglCreateContext.html">eglCreateContext</a></li>
+      <li><a href="eglDestroyContext.html">eglDestroyContext</a></li>
+      <li><a href="eglQueryContext.html">eglQueryContext</a></li>
+      <li><a href="eglMakeCurrent.html">eglMakeCurrent</a></li>
+      <li><a href="eglGetCurrentContext.html">eglGetCurrentContext</a></li>
+      <li><a href="eglGetCurrentDisplay.html">eglGetCurrentDisplay</a></li>
+      <li><a href="eglGetCurrentSurface.html">eglGetCurrentSurface</a></li>
+    </ul>
+
+    <p>
+      Manage or query EGL surfaces:
+    </p>
+
+    <ul>
+      <li><a href="eglCreateWindowSurface.html">eglCreateWindowSurface</a></li>
+      <li><a href="eglCreatePixmapSurface.html">eglCreatePixmapSurface</a></li>
+      <li><a href="eglCreatePbufferSurface.html">eglCreatePbufferSurface</a></li>
+      <li><a href="eglDestroySurface.html">eglDestroySurface</a></li>
+      <li><a href="eglQuerySurface.html">eglQuerySurface</a></li>
+    </ul>
+
+    <p>
+      Synchronize execution:
+    </p>
+
+    <ul>
+      <li><a href="eglWaitGL.html">eglWaitGL</a></li>
+      <li><a href="eglWaitNative.html">eglWaitNative</a></li>
+    </ul>
+
+    <p>
+      Post and copy buffers:
+    </p>
+
+    <ul>
+      <li><a href="eglCopyBuffers.html">eglCopyBuffers</a></li>
+      <li><a href="eglSwapBuffers.html">eglSwapBuffers</a></li>
+    </ul>
+    </div>
+
+    <div class="footer">
+    <p>
+      Copyright &copy; 2003-2004 Silicon Graphics, Inc.
+    </p>
+
+    <p>
+      This document is licensed under the SGI Free Software B License.
+      For details, see
+      <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.
+    </p>
+
+    <p>
+      OpenGL is a registered trademark, and OpenGL ES is a trademark, of
+      Silicon Graphics, Inc.
+    </p>
+    </div>
+
+  </body>
+</html>

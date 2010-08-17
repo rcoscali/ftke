@@ -1,0 +1,174 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; ogl-es.inf
+;
+;   This INF file is used as the input file for "Cabwiz.exe".
+;   Along with sample binary files, it will create multiple (2) CAB files,
+;   for the following types of devices:
+;
+;   - Pocket PC 2003  ARM CPU
+;	- Pocket PC 2003  X86 CPU (for use in the Pocket PC 2003 emulator) 
+;
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;  04-09-2004		Hans-Martin Will	initial version
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;  Copyright (c) 2004, Hans-Martin Will. All rights reserved.
+; 
+;  Redistribution and use in source and binary forms, with or without 
+;  modification, are permitted provided that the following conditions are 
+;  met:
+; 
+;   * Redistributions of source code must retain the above copyright
+;     notice, this list of conditions and the following disclaimer. 
+;
+;   * Redistributions in binary form must reproduce the above copyright
+; 	  notice, this list of conditions and the following disclaimer in the 
+; 	  documentation and/or other materials provided with the distribution. 
+; 
+;  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+;  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+;  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+;  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+;  OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCU;ENT OF 
+;  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+;  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+;  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+;  THE POSSIBILITY OF SUCH DAMAGE.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "Version" section. 
+;   Contains INF version information
+[Version]
+Signature   = "$Windows NT$"	; Should be $Windows NT$ or $Windows 98$ or other OS name
+Provider    = "Vincent"         ; full app name will be "<Provider> <AppName>"
+CESignature = "$Windows CE$"	; Must be $Windows CE$
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "CEStrings" section
+;   Specific strings used by Windows CE AppInstall
+[CEStrings]
+AppName     = "3D Rendering Library"	; full app name will be "<Provider> <AppName>"
+InstallDir  = %CE2%						; "\Windows" (default install directory, which can be changed by end user.)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Optional "Strings" section
+;   Contains string substitutions replacing the key string (enclosed with percent symbols) with the value string
+;   For this example, it will store language-dependent strings
+[Strings]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "CEDevice" section
+;   Specifies the various types of CAB files that will be generated
+[CEDevice]
+UnsupportedPlatforms    = "HPC","Jupiter","Palm PC2"
+VersionMin 		= 3.0
+VersionMax		= 5.0
+
+[CEDevice.PPC2003_ARM]
+ProcessorType           = 2577      ; ARM CPU
+
+[CEDevice.PPC2003_x86]
+ProcessorType           = 686      ; x86 CPU for emulator
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "SourceDisksNames" section
+;   Specifies the source directories of the binary files
+;   Format:     
+;	<source ID> = ,<label>,,<source directory>
+;       <source ID> will be used to specify the source files belonging to this directory
+;       <label> is unused
+;       <source directory> is the relative or absolute directory of the source files
+[SourceDisksNames.PPC2003_ARM]   	; ARM-specific files for Pocket PC 2003
+2 = ,"PPC ARM Files",,..\bin\arm\Release 	; files are in the relative path "..\bin\arm\Release"
+
+[SourceDisksNames.PPC2003_x86]
+2 = ,"PPC x86 Files",,..\bin\emu\Release 	; files are in the relative path "..\bin\emu\Release"
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "SourceDisksFiles" section
+;   Specifies the source filenames that will be packaged in the CAB files
+;   Format:     
+;	<filename> = <source ID>
+;       <filename> is the source filename (enclose in doublequotes for long filenames)
+;       <source ID> is the ID used in [SourceDisksNames] to specify the source directory
+[SourceDisksFiles]
+    ; CPU-independent files
+    ; CPU-specific files
+"GLES_CL.dll"      = 2     ; the 3D rendering library DLL
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "DefaultInstall" section
+;   Specifies the INF sections for file copying, registry settings and creating shortcuts
+;   INF sections that are not listed here will not be used
+[DefaultInstall]
+CopyFiles   = Files.Windows,Files.InstallDir	; Required INF sections that lists the files to be copied
+AddReg      = Reg.Version1			; Required INF sections that lists the registry entries to be created
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required "DestinationDirs" section
+;   Specifies the directories to use for the file copy lists
+;   Format:     
+;	<section name> = 0,<dest directory>
+;       <section name> is the section name used in "[DefaultInstall] CopyFiles"
+;       <dest directory> is the destination directory, using an absolute device path, the directory macros, or the install directory %InstallDir%
+[DestinationDirs]
+Files.Windows       = 0,%CE2%           ; "\Windows" directory
+Files.InstallDir    = 0,%InstallDir%	; "\Program Files\Games\Blkjack" directory (%CE8%\%AppName%).
+DefaultDestDir      = 0,%InstallDir%    ; "\Program Files\Games\Blkjack" directory (%CE8%\%AppName%).
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required sections specified in "[DefaultInstall] CopyFiles" key
+;   Specifies the files to copy
+;   Format:     
+;	<dest filename>,<source filename>,,<copy flags>
+;       <dest filename> is the destination filename (or the source filename if <source filename> is empty)
+;       <source filename> is the source filename
+;       <copy flags> is the copy flags to use
+[Files.Windows]
+    ; Increase reference count
+"GLES_CL.dll","GLES_CL.dll",,0x00000008
+
+[Files.InstallDir]
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Required sections specified in "[DefaultInstall] AddReg" key
+;   Specifies the registry entries to create
+;   Format:     
+;	<reg root>,<reg key>,<reg val>,<reg flags>,<reg data>[,<reg data>]
+;       <reg root> is HKCR, HKLM or HKCU
+;       <reg key> is the registry key name
+;       <reg val> is the registry value name, which is set to "default" if empty
+;       <reg flags> is the registry type/flags to use
+;       <reg data> is the numeric/string registry data, which depends on the <reg flags> used
+[Reg.Version1]
+    ; Set a sample application version number, using the TYPE_DWORD registry type
+HKLM,Software\Microsoft\%AppName%,MajorVersion,0x00010001,0
+HKLM,Software\Microsoft\%AppName%,MinorVersion,0x00010001,7
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Sections specified in "[DefaultInstall] CEShortcuts" key
+;   Specifies the shortcuts to create
+;   Format:     
+;	<shortcut filename>,<shortcut type>,<target file/path>[,<standard dest path>]
+;       <shortcut filename> is the filename of the shortcut
+;       <shortcut type> specifies if the shortcut is to a file or a folder
+;       <target file/path> is the target filename or pathname, which depends on the <shortcut type> flag used
+;       <standard dest path> is an optional destination directory macro (or %InstallDir%) to use
+[Links]
+

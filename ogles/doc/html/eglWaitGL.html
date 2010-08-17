@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>eglWaitGL</title>
+    <link rel="stylesheet" href="man.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="keywords" content="OpenGL ES, eglWaitGL, man"/>
+    <meta name="description" content="OpenGL ES man page of eglWaitGL"/>
+  </head>
+  <body><h2>Name</h2><p><code><strong>eglWaitGL</strong></code>  - complete GL execution prior to subsequent native rendering calls</p><h2>C Specification</h2> <pre>EGLBoolean <strong>eglWaitGL</strong>(void)</pre><h2>Description</h2> <p>GL rendering calls made prior to <code><strong>eglWaitGL</strong></code> are guaranteed to be executed before native rendering calls made after <code><strong>eglWaitGL</strong></code>. The same result can be achieved using <a href="glFinish.html"><code><strong>glFinish</strong></code></a>.</p> <p><code><strong>eglWaitGL</strong></code> is ignored if there is no current EGL rendering context.</p><h2>Errors</h2> <p><code>EGL_FALSE</code> is returned if <code><strong>eglWaitGL</strong></code> fails, <code>EGL_TRUE</code> otherwise.</p> <p><code>EGL_BAD_NATIVE_SURFACE</code> is generated if the surface associated with the current context has a native window or pixmap, and that window or pixmap is no longer valid.</p><h2>Copyright</h2> <p>Copyright © 2003-2004 Silicon Graphics, Inc.</p> <p>This document is licensed under the SGI Free Software B License. For details, see <a href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</a>.</p><h2>See Also</h2> <p><a href="glFinish.html"><code><strong>glFinish</strong></code></a>, <a href="glFlush.html"><code><strong>glFlush</strong></code></a>, <a href="eglWaitNative.html"><code><strong>eglWaitNative</strong></code></a></p></body>
+</html>

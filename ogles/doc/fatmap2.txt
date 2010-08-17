@@ -1,0 +1,787 @@
+  
+             Fast affine texture mapping II (fatmap2.txt)
+             --------------------------------------------
+  
+                                by
+                                    
+                          Mats Byggmastar
+  
+                                MRI
+  
+                     3D programmer in Doomsday
+                          mri@penti.sit.fi
+  
+                  17 April 1997, Jakobstad, Finland
+  
+      Feel free to upload this document anywhere you find appropriate,
+         as long as you keep it in it's original, unmodified form.
+       This is free information, you may not charge anything for it.
+        Companies with selfrespect are encouraged to contact me,
+     if any of this code is to be used as part of a commercial product.
+  
+  
+  
+  Table of contents
+  -----------------
+  
+  1.  About this document
+  2.  Disclaimer
+  3.  About the source code
+  4.  Convex polygons
+  5.  Drawing convex polygons
+  6.  Constant texture gradients and polygons
+  7.  16:16 bit fixed point idiv and imul
+  8.  Fixed point ceil() function
+  9.  Subpixel accuracy
+  10. Subtexel accuracy
+  11. Avoiding divide overflow in slope calculations
+  12. Loop counters in inner loops
+  13. 8:16 bit inner loop
+  14. Arbitrary size bitmap inner loop
+  15. 8:15 bit tiled inner loop
+  16. Polygons per second
+  17. Greetings
+  
+  
+  
+  1.  About this document
+  -----------------------
+  
+      This document is the follow-up to fatmap.txt released 19 Jun. 1996. The
+      aim of this second document is to make a more accurate affine texture
+      mapper. I have also skipped triangles and concentrated on convex
+      polygons to make clipping more efficient. The tiled bitmap inner loop
+      scheme described in fatmap.txt has now also been realized in a 6 clock
+      tick inner loop that is put into action here with good results.
+  
+      As in the previous document the inner loops in assembly are developed
+      for the Intel Pentium processor.
+  
+      People looking for descriptions on perspective correct texture mappers
+      should visit Game Developer Magazine at http://www.gdmag.com and
+      backorder the issues with Chris Hecker's articles on this subject!
+  
+      I, the author, am a 25 year old computer and telecom engineer (B.Sc.)
+      currently working as a teacher in a vocational school for students in
+      the age of 16-19 years studying computers, electronic, automation and
+      power electric. I do real-time 3D graphics programming mostly as a
+      hobby and am an active member of the Finnish demogroup Doomsday. My
+      dream is to one day work full-time with 3D graphics.
+      
+      Special thanks to Harriet Mattfolk for proofreading this document and
+      helping me with the english syntax.
+
+
+  
+  2.  Disclaimer
+  --------------
+  
+      The author takes no responsibility, if something in this document or
+      the accompanying source or executable causes any kind of data loss or 
+      damage to your hardware.
+  
+  
+  
+  3.  About the source code
+  -------------------------
+  
+      Except for the inner loops and some misc. functions the source is 
+      written in C++ very close to C. To make the most of the code I've made
+      the inner loops as inline assembler. I personally have the whole
+      mapping functions in fine-tuned assembly, but it would be pointless to
+      include such a source in this type of document.
+  
+      The source code that should accompany this document is divided into 8
+      files:
+  
+          misc.h      - Misc. declarations of structures and functions
+  
+          clip.cpp    - Sutherland-Hodgman 2D clipping
+          draw.cpp    - Calculates deltas, clips and calls the mappers
+          main.cpp    - Simple test program
+  
+          flat.cpp    - Flat filler
+          gouraud.cpp - Gouraud filler
+          txtmap.cpp  - Texture mapper
+          txtarb.cpp  - Arbitrary size texture mapper
+          txttil.cpp  - Tiled texture mapper
+  
+      The last five files are the ones of interest. The other files were just
+      included so I would be able to make the test program. Clip.cpp is my
+      very own implementation of the Sutherland-Hodgman clipping algorithm
+      and might be of some interest. You can find the theory behind the
+      Sutherland-Hodgman algorithm in any graphics textbook.
+  
+      From time to time I see people looking for a fast way to fill polygons
+      with a solid color. I have therefore included the flat filler. You 
+      might want to replace the call to memset() with some other inner loop.
+      I recently also participated in a discussion on the newsgroup
+      comp.graphics.algorithms concerning floating point vs. fixed point in a
+      gouraud filler so I decided to include my version of a gouraud filler.
+
+      The source should be compiled with Watcom C/C++ as the inline assembly
+      is Watcom specific. It has only been tested with Watcom C/C++ version
+      10.0. The compiled version of the test program (main.exe) is included.
+      You will need the DOS4GW protected mode stub to run it.
+  
+  
+  
+  4.  Convex polygons
+  -------------------
+  
+      First, let us define what a convex polygon is. A convex polygon must
+      not have any of it's corners pointing inwards to the center of the
+      polygon. In other words, the angle between two edges joining in a
+      vertex must not be greater than 180 degree. This means that triangles
+      are always convex polygons. The opposite of convex is concave and they
+      can have corners pointing inwards.
+                       ______         ______________     ____        ____
+            /\       /        \      \              /   |     \    /     |
+          /   \    /            \      \           /    |       \/       |
+        /      \   \            /      /          /     |                |
+      /_________\    \ ______ /      /__________ /      |________________|
+  
+        convex         convex          concave               concave
+  
+      The mappers presented in this document can only draw convex polygons
+      with one exception. The third polygon above will be handled correctly
+      even if it is concave. This is because it is concave in such a way that
+      no scanlines need to be split while rendering it. The fourth polygon
+      will not be handled properly because scanlines must be split.
+  
+  
+  
+  5.  Drawing convex polygons
+  ---------------------------
+  
+      Drawing convex polygons is just as simple and fast as drawing
+      triangles. The only difference is that the vertex scanning code needs
+      to be in a loop for polygons. If we only render triangles we know that
+      we always have 3 vertices which makes the code a bit more
+      straightforward.
+  
+      First step in a polygon function is to search for the top and bottom
+      vertex. So we scan the vertex array and search for min and max y. Let
+      us take the following 4 vertex polygon as example:
+  
+                         v1
+                        / \
+                      /      \
+                    /           \
+                  /                \ 
+             v2 /                    / v0
+                \                 /
+                 \             /  
+                  \         /
+                   \     /
+                    \ /
+                    v3
+  
+      Note that the vertices must be in an anti clockwise order. We find that
+      v1 is the top vertex and v3 is the bottom vertex.
+  
+      We now know that when scanning the left side of the polygon, we should
+      start at v1 and move forward through the array until we come to v3. In
+      general when moving forward, we should wrap to the start of the array
+      if we move past the array. I.e. if we come to the last vertex, our next
+      vertex will be v0.
+                         v1
+                        / 
+                      /
+                    /
+                  /
+             v2 /
+                \
+                 \
+                  \
+                   \
+                    \
+                    v3
+  
+      For the right side we start at v1 and move backwards through the array
+      until we come to v3. In general when moving backwards, we should wrap
+      to the end of the array if we move outside the array. I.e. when we come
+      to v0, our next vertex will be the last vertex in the array.
+  
+                         v1
+                          \ 
+                             \
+                                \
+                                   \ 
+                                     / v0
+                                  /
+                               /  
+                            /
+                         /
+                      /
+                    v3
+  
+      In our example we have 2 sections on the left side:
+  
+        v1 - v2   and  v2 - v3
+  
+      and 2 sections on the right side:
+  
+        v1 - v0   and  v0 - v3
+  
+      The second step in a polygon function is to calculate the x coordinate
+      slope for the first section on the right side. If the section had zero
+      height, try the next until a non-zero section is found.
+  
+      The third step is to calculate x coordinate slope and any other slope
+      (e.g. texture u and v) for the first section on the left side. If the
+      section had zero height, try the next until a non-zero section is
+      found.
+  
+      If all sections on a side has zero height, the whole polygon has zero
+      height and should not be plotted.
+  
+      Now we can start to interpolate the values along the left and the right
+      side as we draw each scanline using an inner loop.
+  
+                         v1
+                        /-\
+                      /------\
+                    /-----------\
+                  /                \ 
+             v2 /                     v0
+  
+      When we come to the end of a section, we search for the next non-zero
+      height section and calculate the new slope. If all sections on one side
+      are done, i.e. if we have come to the bottom vertex, the polygon is
+      done.
+  
+
+
+  6.  Constant texture gradients and polygons
+  -------------------------------------------
+  
+      With triangles the texture gradients (texture u,v slopes over the
+      triangle surface) are guaranteed to be constant. Therefore we can
+      calculate the gradients (dudx, dvdx) once and use the same values for
+      all scanlines of the triangle.
+        
+      If we start out with a triangle and clip it into a polygon, the texture
+      gradients for the polygon are still constant over the whole surface. So
+      if we calculate the gradients before the triangle gets clipped, we can
+      still use the constant texture gradient method for polygons.
+  
+      Calculating the texture gradients for a triangle can be done in the
+      following way:
+                            v0
+                            /\ 
+                          /   \ 
+                        /      \ 
+                      /_________\ 
+                    v1           v2
+  
+          double d = (v0.x - v2.x) * (v1.y - v2.y) -
+                     (v1.x - v2.x) * (v0.y - v2.y);
+          if(d == 0.0) return;
+          double id = 1.0/d * 65536.0;
+          long dudx = ((v0.u - v2.u) * (v1.y - v2.y) -
+                       (v1.u - v2.u) * (v0.y - v2.y)) * id;
+          long dvdx = ((v0.v - v2.v) * (v1.y - v2.y) -
+                       (v1.v - v2.v) * (v0.y - v2.y)) * id;
+  
+      The vertex data x,y,u,v is assumed to be in floating point and the
+      resulting dudx,dvdx is in 16:16 bit fixed point.
+  
+  
+  
+  7.  16:16 bit fixed point idiv and imul
+  ---------------------------------------
+  
+      All mappers work with 16:16 bit fixed point internally. I will not
+      explain how fixed point works here, you can look that up elsewhere.
+      I'll just point out that we need to perform the fixed point divides and
+      multiplies in assembler rather than in C. So from here on you can
+      assume that code like:
+  
+          long dxdy = (width << 16) / height;
+          long x = v1.x + ((prestep * dxdy) >> 16);
+  
+      need to be performed by some inline assembly functions:
+  
+          long dxdy = idiv16(width, height);
+          long x = v1.x + imul16(prestep, dxdy);
+  
+  
+  
+  8.  Fixed point ceil() function
+  -------------------------------
+  
+      We need a ceil() function for the subpixel and subtexel accuracy.
+      Definition of ceil() is:
+  
+          ceil(x) returns the smallest integer not < x
+  
+  
+      e.g.  ceil(1.0)  returns  1
+            ceil(1.5)  returns  2
+            ceil(-2.0) returns -2
+            ceil(-1.5) returns -1
+  
+      If we limit x to only positive numbers we can make a 16:16 bit fixed
+      point version of ceil() very easily. We add 0xffff to x and right-shift
+      by 16.
+  
+          inline long ceil(long x)
+          {
+              x += 0xffff;
+              return x >> 16;
+          }
+  
+      Note that this function do not give the correct result if x is
+      negative. This is no problem as x will never be negative the way ceil()
+      is used in the mappers.
+      
+      
+  
+  9.  Subpixel accuracy
+  ---------------------
+  
+      The first thing to note when aiming for subpixel accurate polygon
+      drawing is that we must never truncate screen coordinates to integers.
+      Today it's common to use floating point all the way trough the 3D
+      engine and convert the projected screen coordinates to integers just
+      before entering the polygon function. This conversion should of course
+      be a float to fixed point conversion so that we do not lose the
+      fractional part. The fractional part is in fact the subpixel position
+      that will affect how the slope of a polygon edge will be rendered.
+  
+      Without subpixel accuracy the polygons will jump one pixel at a time
+      when the object is moving slowly over the screen. With subpixel
+      accuracy the pixels that makes up the edges between the polygons will
+      slowly "float", making the edges seem to move slowly over the screen. 
+  
+      Calculating the slope of a subpixel accurate section:
+  
+          long scanlines = ceil(v2.y) - ceil(v1.y);
+          if(scanlines <= 0) return;              // Section had zero height
+          
+          long height = v2.y - v1.y;              
+          long dxdy = ((v2.x - v1.x) << 16) / height; 
+      
+          long prestep = (ceil(v1.y) << 16) - v1.y;
+          long left_x = v1.x + ((prestep * dxdy) >> 16);   
+  
+      The height of the section, or the number of scanlines, will be an
+      integer. When calculating the slope (dxdy) we will not use this height,
+      rather the real height that includes the fractional part. We apply the
+      subpixel accuracy to the slope by adjusting the initial x coordinate by
+      the amount that was truncated when selecting the top y coordinate using
+      ceil().
+  
+      Interpolating along subpixel accurate left and right sections:
+  
+          for(  )
+          {
+              long x1 = ceil(left_x);               // Scanline start x
+              long width = ceil(right_x) - x1;      // Scanline width
+          
+              if(width > 0)
+              {
+                  Now draw the scanline from x1,y, width pixels wide.
+              }
+                
+              left_x  += left_dxdy;
+              right_x += right_dxdy;
+              y++;
+          }
+  
+  
+  
+  10. Subtexel accuracy
+  ---------------------
+  
+      Calculate the u,v (dudy,dvdy) slopes along a section the same way as
+      the x coordinate slope and prestep the initial values the same way:
+  
+          long height = v2.y - v1.y;              
+          long dudy = ((v2.u - v1.u) << 16) / height; 
+          long dvdy = ((v2.v - v1.v) << 16) / height; 
+      
+          long prestep = (ceil(v1.y) << 16) - v1.y;
+          long left_u = v1.u + ((prestep * dudy) >> 16);   
+          long left_v = v1.v + ((prestep * dvdy) >> 16);   
+  
+      When we interpolate with subtexel accuracy we must prestep u,v before
+      drawing each scanline. This is because we round the start of the
+      scanline (x1) upward to the nearest pixel using ceil().
+  
+          for(  )
+          {
+              long x1 = ceil(left_x);                 // Scanline start x
+              long width = ceil(right_x) - x1;        // Scanline width
+      
+              if(width > 0)
+              {
+                  long prestep = (x1 << 16) - left_x;
+                  long u = left_u + ((prestep * dudx) >> 16); 
+                  long v = left_v + ((prestep * dvdx) >> 16);
+                  
+                  Now draw the scanline from x1,y,u,v, width pixels wide.
+              }
+      
+              left_x  += left_dxdy;
+              left_u  += left_dudy;
+              left_v  += left_dvdy;
+              right_x += right_dxdy;
+              y++;
+          }
+  
+  
+  
+  11. Avoiding divide overflow in slope calculations
+  --------------------------------------------------
+      
+      For some sections that are very thin, the slope calculation might
+      overflow.
+  
+      Look at the following case:
+  
+          v1.x = 0000:0000    v2.x = 0002:0000
+          v1.y = 0000:0000    v2.y = 0000:0001
+      
+      ceil(v2.y) - ceil(v1.y)  will report that this is one scanline even if
+      the actual height is just a fraction of a pixel.
+  
+          height = v2.y - v1.y = 0000:00001
+          width  = v2.x - v1.y = 0002:00000
+  
+      so performing  (width << 16) / height  will cause divide overflow. We
+      are aiming for nearly perfect affine mapping so we can't just take some
+      default value for the slope. One way to avoid the overflow is to
+      multiply width by the inverse of height using only 18:14 bit precision.
+  
+          long height = v2.y - v1.y;
+          long inv_height = (0x10000 << 14) / height;
+          long dxdy = ((v2.x - v1.x) * inv_height) >> 14;
+  
+      Note that this method can only be used for this special case where the
+      section height is less than one pixel. Other sections that are more
+      than one pixel should of course be calculated as usual.
+      
+  
+  
+  12. Loop counters in inner loops
+  --------------------------------
+  
+      There is a neat way to combine movement of destination pointer and loop
+      counter in inner loops. It might not save much (half a clock tick on a
+      Pentium) but you might find other ways of using it.
+  
+      Assume that we want to draw a horizontal line on the screen with the
+      following data:
+  
+          al  = color
+          ecx = width of line
+          edi = destination pointer to first pixel on the left
+  
+      The standard way would be:
+  
+          inner:
+              mov   [edi], al         ; plot
+              inc   edi               ; advance destination pointer
+              dec   ecx               ; decrease loop counter
+              jnz   inner
+  
+      Another way is to combine destination pointer and width and plot the
+      line from right to left:
+  
+          inner:
+              mov   [edi+ecx-1], al   
+              dec   ecx               
+              jnz   inner
+  
+      In the above loop we got rid of one instruction. On the other hand, we
+      are writing to memory from higher to lower addresses. This is bad for
+      the write buffers. We should write to increasing addresses instead.
+      That can be done in this way:
+  
+              lea   edi, [edi+ecx]  
+              neg   ecx               ; loop counter goes from -width to 0
+  
+          inner:
+              mov   [edi+ecx], al     
+              inc   ecx               
+              jnz   inner
+      
+      The destination is first moved to the end of the line and the loop
+      counter is negated. The first pixel will therefore be plotted at
+      start+width-width, i.e. at the start of the line.
+  
+              neg   ecx  
+      
+      can be replaced with:
+  
+              xor   ecx, -1
+              inc   ecx
+  
+      which most of the time can be paired with some other instructions in
+      the setup code. neg is a non pairable, 1 tick instruction. We will then
+      end up with:
+  
+              lea   edi, [edi+ecx]  
+              xor   ecx, -1
+              inc   ecx
+          inner:
+              mov   [edi+ecx], al     
+              inc   ecx               
+              jnz   inner
+  
+  
+  
+  13. 8:16 bit inner loop
+  -----------------------
+  
+      After fatmap.txt was released I was sent a very nice 8:16 bit 4 clock
+      tick inner loop made by Russel Simmons (Armitage/Beyond). In it's
+      original form it plotted the scanlines from right to left. I have in a
+      later stage changed this and present the new version here which plots
+      the scanlines from left to right.
+  
+          ; bitmap (256x256) must be aligned on 64k. (low 16 bits zero)
+          ; eax =  u frac           : -
+          ; ebx =  bitmap ptr       : v int      : u int
+          ; ecx =  scanline width
+          ; edx =  v frac           : v int step : u int step
+          ; esi =  u frac step      : 0          : 0
+          ; edi =  destination ptr
+          ; ebp =  v frac step      : 0          : 0
+  
+          lea   edi, [edi+ecx]
+          xor   ecx, -1
+          inc   ecx
+  
+       inner:
+          mov   al, [ebx]      ; get color
+          add   edx, ebp       ; v frac += v frac step
+          adc   bh, dh         ; v int  += v int step (+carry from v frac)
+          add   eax, esi       ; u frac += u frac step
+          adc   bl, dl         ; u int  += u int step (+carry from u frac)
+          mov   [edi+ecx], al  ; plot pixel
+          inc   ecx
+          jnz   inner
+  
+  
+      This is a good inner loop with enough precision, which also can handle
+      texture wrapping. Note that the texture must be aligned on 64k.
+  
+      One way of aligning texture maps on 64k is to first make a buffer which
+      is 64k byte larger than the texture map and then align a pointer inside
+      that buffer:
+  
+          char source[256*256];       // source bitmap
+          char bigbuffer[256*256*2];  // 2*64k byte buffer
+          
+          char * aligned = (char *) (((int)(bigbuffer + 0xffff)) & ~0xffff); 
+          memcpy(aligned, source, 256*256);
+  
+      Now access the bitmap using the aligned pointer.    
+  
+  
+  
+  14. Arbitrary size bitmap inner loop
+  ------------------------------------
+  
+      The idea for the following 5 clock tick inner loop was taken from Chris
+      Hecker's scanline subdivision texture mapper. This loop doesn't rely on
+      the fact that textures are always 256x256 pixels. We use a 2 dword
+      lookup table instead to perform the v * width calculation. Therefore it
+      can handle bitmaps of any size. The fractional part in this loop can be
+      up to 32 bits but we only use 16 bits here. Note that the bitmap does
+      not need to be aligned.
+  
+      The trick in this loop is to convert the carry flag from the fractional
+      v addition into an index in the lookup table. Then to get the texture
+      increment from the lookup table.
+  
+          ; bitmap can be any size, setup duvdxstep table according to width
+          ; dvdxfrac =  v frac step : 0
+          ; eax =  u frac           : 0
+          ; ebx =  v frac           : 0
+          ; ecx =  scanline width
+          ; edx =  u frac step      : 0
+          ; esi =  bitmap ptr
+          ; edi =  destination ptr
+  
+          lea   edi, [edi+ecx]
+          xor   ecx, -1
+          add   ebx, [dvdxfrac]               ; v frac += v frac step
+          inc   ecx
+          sbb   ebp, ebp                      ; -1 if carry from add
+  
+       inner:
+          add   eax, edx                      ; u frac += u frac step
+          mov   bl, [esi]                     ; get color
+          adc   esi, [duvdxstep+4+ebp*4]      ; move texture pointer
+          add   ebx, [dvdxfrac]               ; v frac += v frac step
+          sbb   ebp, ebp                      ; -1 if carry from add
+          mov   [edi+ecx], bl                 ; plot pixel
+          inc   ecx
+          jnz   inner
+      
+  
+      The duvdxstep lookup table is set up in the following way:
+  
+          long duvdxstep[2];
+  
+          duvdxstep[0] = (dudx >> 16) + (dvdx >> 16) * mapwidth + mapwidth;
+          duvdxstep[1] = (dudx >> 16) + (dvdx >> 16) * mapwidth;  
+  
+      This means that when we get that carry from the v addition and ebp
+      becomes -1, we will address duvdxstep[0] and add one extra line in the
+      bitmap.
+  
+      A drawback of this inner loop is that it can not handle texture
+      wrapping. I.e. you must never let the u,v coordinates be outside the
+      texture map or you will read random data outside the texture map or
+      even cause a protection fault.
+
+
+  
+  15. 8:15 bit tiled inner loop
+  -----------------------------
+  
+      In fatmap.txt I described a method of arranging the texture map as 8x8
+      tiles for more efficient cache usage. Back then I did not know any way
+      of doing the bit-swapping inner loop in less than 11 clock ticks. But
+      one day it just came to me and I could immediately write a 8 clock tick
+      8:16 bit version. That version did not even work in theory, but it was
+      a starting point. The inner loop below has evolved from the original 8
+      clock tick version over a two month period. It was developed on paper
+      only and the first time I actually tested any of the loops, was this
+      version and it worked perfectly.
+  
+      The version below runs at 6 clock ticks and uses 8:15 bit 
+      interpolation. Here 8x8 tiles are used but any type of scheme can be
+      used, just modify the bit-masks. The 256x256 bitmap need not be
+      aligned, but for the tiling scheme to be effective the bitmap should be
+      aligned on 32 byte. Texture wrapping is allowed.
+
+          ; bitmap (256x256) must be stored as 8x8 tiles
+          ; tildudx =  wwwww11111111www1fffffffffffffffb  (w=whole, f=frac)
+          ; tildvdx =  11111wwwwwwww1111fffffffffffffffb
+          ; eax =  u   wwwww00000000www0fffffffffffffffb
+          ; ebx =  v   00000wwwwwwww0000fffffffffffffffb
+          ; ecx =  scanline width
+          ; edi =  destination ptr
+          ; esi =  bitmap ptr
+  
+          lea   edi, [edi+ecx-1]
+          xor   ecx, -1
+          lea   ebp, [eax+ebx]                            ; u+v
+          inc   ecx
+  
+       inner:
+          add   eax, [tildudx]                            ; u += tildudx
+          add   ebx, [tildvdx]                            ; v += tildvdx
+          shr   ebp, 16                                   ; (u+v) >> 16
+          and   eax, 11111000000001110111111111111111b    ; clear bitgaps
+          and   ebx, 00000111111110000111111111111111b
+          inc   ecx
+          mov   dl, [esi+ebp]                             ; get color
+          lea   ebp, [eax+ebx]                            ; u+v
+          mov   [edi+ecx], dl                             ; plot pixel
+          jnz   inner
+      
+  
+      Converting 16:16 bit fixed point dudx,dvdx to the tiled format can be
+      done the following way:
+  
+          tildudx = (((dudx << 8) & 0xf8000000) +
+                     ((dudx >> 1) & 0x00007fff) +
+                      (dudx       & 0x00070000)) | 0x07f88000;
+      
+          tildvdx = (((dvdx << 3) & 0x07f80000) +
+                     ((dvdx >> 1) & 0x00007fff)) | 0xf8078000;
+  
+      Note that we fill out the bit-gaps with 1's. This is because we must
+      force the bits to jump over the gaps when we add in the inner loop.
+      These 1's must be cleared out after the add. We do this with the 'and'
+      instructions in the inner loop.
+  
+      Before entering the inner loop we also convert u,v to the tiled format:
+  
+          u = ((u << 8) & 0xf8000000) +
+              ((u >> 1) & 0x00007fff) +
+               (u       & 0x00070000);
+      
+          v = ((v << 3) & 0x07f80000) +
+              ((v >> 1) & 0x00007fff);
+  
+      It should be noticed that 15 bits are only used for the fractional part
+      and that it is right-shifted 1 bit. This is done because we must not
+      let the fractional part overflow and clutter the texture pointer when
+      we add u+v using the lea instruction. We have placed a bit-gap between
+      the fractional part and the whole part to avoid this.
+  
+      The bitmap itself can be tiled the following way:
+  
+          char source[256*256];   // linear source bitmap
+          char tiled[256*256];    
+  
+          for(int v=0; v<256; v++) {
+              for(int u=0; u<256; u++) {
+                  int dst = ((u<<8) & 0xf800)+(u & 0x0007)+((v<<3) & 0x07f8);
+                  tiled[dst] = source[u+v*256];
+              }
+          }
+  
+  
+  
+  16. Polygons per second
+  -----------------------
+  
+      From time to time I see coders talking about the speed of their 3D 
+      engine by specifying how many polygons per second can be plotted. In my
+      opinion, this is completely irrelevant as they do not specify under
+      what condition they have made the test. The speed will be _very_
+      dependent on the size and orientation of the polygons as well as how
+      the texture is mapped onto the polygons. Many other factors will
+      contribute to the speed, even the type of memory manager or DOS
+      extender.
+  
+      With the simple test program accompanying this document I try to
+      compare the speed between the different mappers. In this case, a
+      comparison is valid as they work under the exact same conditions. I get
+      the following results on my Pentium 120:
+  
+          Flat polys/sec              3494
+          Gouraud polys/sec           1849
+          Texture polys/sec           1214
+          Arbitrary texture polys/sec 1196
+          Tiled texture polys/sec     1520
+  
+      These figures do not seem very impressive, but keep in mind that the 
+      triangles can be very large as I allow x,y to be in the range
+      [0...320],[0...200]. In any case you should notice that the flat filler
+      (using standard memset() as inner loop) is about twice as fast as the
+      others. The arbitrary size mapper and the ordinary mapper should run at
+      about the same speed. The tiled mapper will come out as a winner,
+      because we allow the u,v values to vary a lot over the triangle
+      surface, i.e. the cache issues will become more important than a quick
+      setup and a fast inner loop.
+  
+
+
+  17. Greetings
+  -------------
+  
+      Members of Doomsday
+      Members of SoCS
+      Members of Esteem
+      Phil Carmody
+      Nix / The Black Lotus
+      Submissive / Cubic Team & $eeN
+      Armitage / Beyond
+      Jare / Iguana
+      Wog / Orange
+      #coders. No one mentioned, no one forgotten.
+      All my students in YiJ 1996-1997; Data3, AD2, Elm2, El1A, El1B
+  
+      ...my heart in Oslo
+  
+  .eof.

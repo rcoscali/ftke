@@ -1,0 +1,20 @@
+From:  	<Pamela.Annund@Symbian.com>  	
+To: 	<hmwill@mac.com>
+Date: 	Wed Jul 14, 2004 02:27:19 AM PDT
+Subject: 	EPOC UID Number Allocation
+
+
+	
+
+
+
+The following block of 10 UID numbers has been allocated for your use:
+
+UID Name: KUidVincent3DRenderingLibrary
+Number Allocation (Decimal): 270544286 To 270544295 Inclusive
+Number Allocation (Hexadecimal): 10202D9E To 10202DA7 Inclusive.
+
+If you have any problems please contact us at the following address:
+UID@Symbiandevnet.com
+
+
