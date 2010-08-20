@@ -31,6 +31,8 @@
 #include <math.h>
 #endif
 
+typedef long long __int64;
+
 #define __f2x(f)	((int)(f*65536))
 #define __mulx(a,b)	((((__int64)(a))*(b))>>16)
 #define __divx(a,b)	(((__int64)(a)<<16)/(b))

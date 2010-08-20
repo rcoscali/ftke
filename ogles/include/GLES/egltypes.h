@@ -46,6 +46,16 @@ typedef RWindow *		NativeWindowType;
 typedef CFbsBitmap * 	NativePixmapType;
 
 #define EGL_DEFAULT_DISPLAY ((NativeDisplayType) 0)
+#elif defined(USE_FTK)
+
+#include <ftk.h>
+
+typedef int DWORD;
+typedef FtkDisplay* NativeDisplayType;
+typedef FtkWidget*  NativeWindowType;
+typedef FtkBitmap*  NativePixmapType;
+
+#define EGL_DEFAULT_DISPLAY ((NativeDisplayType) ftk_default_display())
 
 #elif (defined(LINUX) || defined(__linux__))
 #include <stdio.h>
