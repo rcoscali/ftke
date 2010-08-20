@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: Vincent
+Description: A 3-D Rendering Library for Mobile Devices
+Version: 0.0.1
+Libs: -L${libdir} -lvincent @LIBS@
+Cflags: -I${includedir}
+
