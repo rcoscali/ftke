@@ -3,7 +3,7 @@
  * Version:  1.2
  *
  * Copyright (C) 2003  David Blythe   All Rights Reserved.
- * Copyright (C) 2010  Li XianJing   All Rights Reserved.
+ * Copyright (C) 2010  Li XianJing	 All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -31,9 +31,9 @@
 #include "ug.h"
 
 typedef struct {
-    EGLDisplay egldpy;
-    NativeDisplayType dpy;
-    struct ugwindow* win, * winlist;
+	EGLDisplay egldpy;
+	NativeDisplayType dpy;
+	struct ugwindow* win, * winlist;
 } UGCtx_t;
 
 static UGCtx_t* context = NULL;
@@ -47,25 +47,25 @@ typedef void (*uGReshape)(UGWindow w, int width,int height);
 typedef EGLBoolean (*PFNSAVESURFACE)(EGLSurface surface, const char* filename);
 
 typedef struct ugwindow {
-    int width;
-    int height;
-    int redraw;
-    UGCtx_t* ug;
-    FtkWidget* win;
+	int width;
+	int height;
+	int redraw;
+	UGCtx_t* ug;
+	FtkWidget* win;
    
-    int x;
-    int y;
-    uGKbd kbd;
-    uGDraw draw;
+	int x;
+	int y;
+	uGKbd kbd;
+	uGDraw draw;
 	uGMotion motion;
-    uGReshape reshape;
-    uGPointer pointer;
-    
-    EGLContext eglctx;
-    EGLSurface surface;
-    EGLConfig  eglconfig;
-    FtkSource* painter_idle;
-    struct ugwindow* next, * prev;
+	uGReshape reshape;
+	uGPointer pointer;
+	
+	EGLContext eglctx;
+	EGLSurface surface;
+	EGLConfig  eglconfig;
+	FtkSource* painter_idle;
+	struct ugwindow* next, * prev;
 } UGWindow_t;
 
 static int argc = 1;
@@ -74,7 +74,7 @@ static PFNSAVESURFACE pfnSaveSurface;	 // function pointer used to save images
 
 UGCtx APIENTRY ugInit(void) 
 {
-    UGCtx_t* ug = calloc(1, sizeof *ug);
+	UGCtx_t* ug = calloc(1, sizeof *ug);
 	return_val_if_fail(ug != NULL, 0);
 
 	ftk_init(argc, argv);
@@ -85,29 +85,29 @@ UGCtx APIENTRY ugInit(void)
 	eglInitialize(ug->egldpy, NULL, NULL);
 	pfnSaveSurface = (PFNSAVESURFACE)eglGetProcAddress("eglSaveSurfaceHM");
 
-    return (UGCtx)ug;
+	return (UGCtx)ug;
 }
 
 void APIENTRY
 ugFini(UGCtx ug) {
-    /*XXXblythe open windows?*/
-    UGCtx_t* _ug = (UGCtx_t*)ug;
-    eglTerminate(_ug->egldpy);
-    free(_ug);
-    context = NULL;
+	/*XXXblythe open windows?*/
+	UGCtx_t* _ug = (UGCtx_t*)ug;
+	eglTerminate(_ug->egldpy);
+	free(_ug);
+	context = NULL;
 }
 
 UGCtx APIENTRY ugCtxFromWin(UGWindow uwin) {
-    return (UGCtx)((UGWindow_t*)uwin)->ug;
+	return (UGCtx)((UGWindow_t*)uwin)->ug;
 }
 
 static void
 bind_context(UGCtx_t* ug, UGWindow_t* w) {
-    if (!eglMakeCurrent(ug->egldpy, w->surface, w->surface, w->eglctx)) {
+	if (!eglMakeCurrent(ug->egldpy, w->surface, w->surface, w->eglctx)) {
 		printf("botch makecurrent\n");
 		exit(1);
-    }
-    ug->win = w;
+	}
+	ug->win = w;
 }
 
 static int GetKey(int vk) 
@@ -132,15 +132,15 @@ static int GetKey(int vk)
 	case FTK_KEY_HOME:		return UG_KEY_HOME;
 	case FTK_KEY_END:		return UG_KEY_END;
 	case FTK_KEY_INSERT:		return UG_KEY_INSERT;
-	default:			return 0;
+	default:			return vk;
 	}
 }
 
 
-static Ret  ug_win_on_event(void* user_data, void* obj)
+static Ret	ug_win_on_event(void* user_data, void* obj)
 {
 	FtkEvent* event = obj;
-	UGWindow_t* win = NULL;
+	UGWindow_t* win = user_data;
 
 	switch(event->type)
 	{
@@ -185,13 +185,13 @@ static Ret  ug_win_on_event(void* user_data, void* obj)
 static int attribs[] = { EGL_RED_SIZE, 1, EGL_NONE }; /*XXXblythe*/
 static int attribs2[] = {EGL_RED_SIZE, 1, EGL_DEPTH_SIZE, 1, EGL_NONE};
 
-UGWindow APIENTRY ugCreateWindow(UGCtx ug,  const char* config, 
+UGWindow APIENTRY ugCreateWindow(UGCtx ug,	const char* config, 
 	const char* title, int width, int height, int x, int y) {
 	
 	EGLint n, vid;
 	EGLConfig configs[1];
-    UGCtx_t* _ug = (UGCtx_t*)ug;
-    UGWindow_t *w = calloc(1, sizeof *w);
+	UGCtx_t* _ug = (UGCtx_t*)ug;
+	UGWindow_t *w = calloc(1, sizeof *w);
 	int depth = strstr(config, "UG_DEPTH") != 0;
 
 	return_val_if_fail(ug != 0 && w != NULL, 0);
@@ -228,56 +228,62 @@ UGWindow APIENTRY ugCreateWindow(UGCtx ug,  const char* config,
 	
 	w->eglctx = eglCreateContext(_ug->egldpy, w->eglconfig, NULL, NULL);
 	bind_context(_ug, w);
-    
-    return (UGWindow)w;
+	
+	return (UGWindow)w;
 }
 
 void APIENTRY ugDestroyWindow(UGWindow uwin) {
-    UGWindow_t* w = (UGWindow_t*)uwin;
-    UGCtx_t* ug = w->ug;
-    eglDestroySurface(ug->egldpy, w->surface);
+	UGWindow_t* w = (UGWindow_t*)uwin;
+	UGCtx_t* ug = w->ug;
+	eglDestroySurface(ug->egldpy, w->surface);
 	ftk_widget_unref(w->win);
 
-    if (ug->winlist == w) ug->winlist = w->next;
-    if (w->next) w->next->prev = w->prev;
-    if (w->prev) w->prev->next = w->next;
+	if (ug->winlist == w) ug->winlist = w->next;
+	if (w->next) w->next->prev = w->prev;
+	if (w->prev) w->prev->next = w->next;
 	if(w->painter_idle != NULL) ftk_source_unref(w->painter_idle);
-    free(w);
+	free(w);
 }
 
 void APIENTRY
 ugReshapeFunc(UGWindow uwin, void (*f)(UGWindow uwin, int width, int height)) {
-    UGWindow_t *w = (UGWindow_t*)uwin;
-    w->reshape = f;
+	UGWindow_t *w = (UGWindow_t*)uwin;
+	w->reshape = f;
+	if(f != NULL)
+	{
+		f(uwin, w->width, w->height);
+	}
+
+	return;
 }
 
 void APIENTRY
 ugDisplayFunc(UGWindow uwin, void (*f)(UGWindow uwin)) {
-    UGWindow_t *w = (UGWindow_t*)uwin;
-    w->draw = f;
+	UGWindow_t *w = (UGWindow_t*)uwin;
+	w->draw = f;
 
-    ugPostRedisplay(uwin);
+	ugPostRedisplay(uwin);
 }
 
 void APIENTRY
 ugKeyboardFunc(UGWindow uwin, void (*f)(UGWindow uwin, int key, int x, int y)) {
-    UGWindow_t *w = (UGWindow_t*)uwin;
-    w->kbd = f;
+	UGWindow_t *w = (UGWindow_t*)uwin;
+	w->kbd = f;
 }
 
 void APIENTRY
 ugPointerFunc(UGWindow uwin, void (*f)(UGWindow uwin, int button, int state, int x, int y)) {
-    UGWindow_t *w = (UGWindow_t*)uwin;
-    w->pointer = f;
+	UGWindow_t *w = (UGWindow_t*)uwin;
+	w->pointer = f;
 }
 
 void APIENTRY
 ugMotionFunc(UGWindow uwin, void (*f)(UGWindow uwin, int x, int y)) {
-    UGWindow_t *w = (UGWindow_t*)uwin;
-    w->motion = f;
+	UGWindow_t *w = (UGWindow_t*)uwin;
+	w->motion = f;
 }
 
-static Ret  on_idle(void* user_data)
+static Ret	on_idle(void* user_data)
 {
 	uGIdle idle = user_data;
 
@@ -318,7 +324,7 @@ static Ret redisplay(void* ctx)
 
 void APIENTRY ugPostRedisplay(UGWindow uwin) 
 {
-    UGWindow_t* w = (UGWindow_t*)uwin;
+	UGWindow_t* w = (UGWindow_t*)uwin;
 	
 	return_if_fail(w != NULL);
 
@@ -330,13 +336,13 @@ void APIENTRY ugPostRedisplay(UGWindow uwin)
 	ftk_source_ref(w->painter_idle);
 	ftk_main_loop_add_source(ftk_default_main_loop(), w->painter_idle);
 
-    return;
+	return;
 }
 
 void APIENTRY ugSwapBuffers(UGWindow uwin) 
 {
-    UGWindow_t* w = (UGWindow_t*)uwin;
+	UGWindow_t* w = (UGWindow_t*)uwin;
 
-    eglSwapBuffers(context->dpy, w->surface);
+	eglSwapBuffers(context->dpy, w->surface);
 }
 
