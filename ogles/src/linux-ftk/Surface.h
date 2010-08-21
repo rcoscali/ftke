@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------
 //
 // 08-14-2003		Hans-Martin Will	initial version
-// 08-18-2010		Li XianJing 	port to ftk
+// 08-18-2010		Li XianJing		port to ftk
 //
 // --------------------------------------------------------------------------
 //
@@ -18,11 +18,11 @@
 // modification, are permitted provided that the following conditions are 
 // met:
 // 
-//	 *  Redistributions of source code must retain the above copyright
-// 		notice, this list of conditions and the following disclaimer. 
-//   *	Redistributions in binary form must reproduce the above copyright
-// 		notice, this list of conditions and the following disclaimer in the 
-// 		documentation and/or other materials provided with the distribution. 
+//	 *	Redistributions of source code must retain the above copyright
+//		notice, this list of conditions and the following disclaimer. 
+//	 *	Redistributions in binary form must reproduce the above copyright
+//		notice, this list of conditions and the following disclaimer in the 
+//		documentation and/or other materials provided with the distribution. 
 // 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
@@ -91,21 +91,21 @@ namespace EGL {
 		NativeDisplayType GetDisplay();
 		NativeWindowType  GetWidget();
 		NativePixmapType  GetBitmap();
-    
-    	int GetSurfaceType();
+	
+		int GetSurfaceType();
 
 	private:
-	    int m_SurfaceType;
-    	int m_WindowDepth;
+		int m_SurfaceType;
+		int m_WindowDepth;
 		Rect	m_Rect;
 		Config	m_Config;			// configuration arguments
 		U16 *	m_ColorBuffer;		// pointer to frame buffer base address 5-6-5
 		U8 *	m_AlphaBuffer;		// pointer to alpha buffer
 		U16 *	m_DepthBuffer;		// pointer to Z-buffer base address
 		U32 *	m_StencilBuffer;	// stencil buffer
-    	
-    	NativeWindowType  m_Window;
-    	NativePixmapType  m_Bitmap;
+		
+		NativeWindowType  m_Window;
+		NativePixmapType  m_Bitmap;
 		NativeDisplayType m_Display;				// windows device context handle
 
 		Context *	m_CurrentContext;
