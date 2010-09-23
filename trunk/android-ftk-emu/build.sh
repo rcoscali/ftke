@@ -37,7 +37,7 @@ echo "Copying files..."
 for f in ramdisk.img system.img
 do
 	echo "  $f --> $ADNROID_SDK_IMAGES_DIR"
-	mv -f $f $ADNROID_SDK_IMAGES_DIR
+	cp -f $f $ADNROID_SDK_IMAGES_DIR
 done
 
 echo "Done"

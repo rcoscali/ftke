@@ -74,7 +74,7 @@ int startup_desktop(const char* name)
 int switch_root(void)
 {
 	int ret = chroot("/system");
-	ret = startup_desktop("/opt/bin/desktop");
+	ret = startup_desktop("/opt/ftk-arm/bin/desktop");
 
 	return ret;
 }
