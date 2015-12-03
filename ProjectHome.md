@@ -1,0 +1,1 @@
+Ftk is a gui library for embedded system. FTKE means extend libraries for ftk, such as j2me, cairo, webkit porting for FTK.
